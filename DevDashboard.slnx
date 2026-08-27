@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DevDashboard/DevDashboard.csproj" />
+  <Project Path="SystemMonitor/SystemMonitor.csproj" />
+</Solution>
