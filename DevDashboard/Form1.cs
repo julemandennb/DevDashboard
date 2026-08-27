@@ -19,7 +19,7 @@ namespace DevDashboard
             {
                 var systems = await systemMonitors.GetAll();
 
-                 var fff = systems[0].SystemInfos();
+                 var fff = systems[1].SystemInfos();
 
                 var fsfse = "fgsefsef";
             });

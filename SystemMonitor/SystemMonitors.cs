@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using SystemMonitor.Interface;
 
@@ -13,21 +14,28 @@ namespace SystemMonitor
 
         public virtual string Get()
         {
-            return "SystemMonitors";
+            Debugger.Break();
+            throw new NotSupportedException(
+                "Get() must be implemented by a specific system monitor.");
         }
 
         public virtual List<string> SystemInfos()
         {
-            return new List<string>();
+            Debugger.Break();
+            throw new NotSupportedException(
+                "SystemInfos() must be implemented by a specific system monitor.");
         }
 
         public async Task<List<ISystemMonitors>> GetAll()
         {
-            List<ISystemMonitors> systems = new List<ISystemMonitors>();
-            systems.Add(new CpuMonitor());
-
-            return systems;
-
+            return await Task.Run(() =>
+            {
+                return new List<ISystemMonitors>
+                {
+                    new CpuMonitor(),
+                    new RamMonitor()
+                };
+            });
         }
     }
 }
