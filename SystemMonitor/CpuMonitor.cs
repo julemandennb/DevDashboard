@@ -12,6 +12,10 @@ using SystemMonitor.Interface;
 
 namespace SystemMonitor
 {
+    /// <summary>
+    /// Monitors the CPU and provides information about
+    /// processor usage and hardware details.
+    /// </summary>
     public class CpuMonitor : SystemMonitors, ICpuMonitor
     {
 
@@ -30,6 +34,12 @@ namespace SystemMonitor
            
         }
 
+        /// <summary> 
+        /// Gets the current CPU usage. 
+        /// </summary> 
+        /// <returns> 
+        /// A formatted string containing the current CPU usage percentage. 
+        /// </returns>
         public override string Get()
         {
             Thread.Sleep(500);
@@ -39,6 +49,13 @@ namespace SystemMonitor
             return $"CPU: {usage:F1}%";
         }
 
+        /// <summary> 
+        /// Gets detailed information about the installed CPU. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing detailed CPU information such as the name, 
+        /// manufacturer, core count, clock speeds, cache sizes, and processor ID. 
+        /// </returns>
         public override List<DtoSystemInfo> SystemInfos()
         {
             try

@@ -20,12 +20,12 @@ namespace DevDashboard
             {
                 var systems = await systemMonitors.GetAll();
 
-                 var SystemInfo = systems[1].SystemInfos();
+                 var SystemInfo = systems[1].Get();
 
-                if(SystemInfo[0] is DtoSystemInfoRam ram)
+               /* if(SystemInfo[0] is DtoSystemInfoInternet ram)
                 {
-                    var fsfse = ram.Manufacturer;
-                }
+                    var fsfse = ram.Speed;
+                }*/
 
                
             });

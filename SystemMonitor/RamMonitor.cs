@@ -9,6 +9,10 @@ using SystemMonitor.Interface;
 
 namespace SystemMonitor
 {
+    /// <summary> 
+    /// Monitors system RAM and provides information about 
+    /// memory usage and installed physical memory. 
+    /// </summary>
     public class RamMonitor: SystemMonitors, IRamMonitor
     {
         private readonly PerformanceCounter _ram;
@@ -21,12 +25,51 @@ namespace SystemMonitor
          
         }
 
+        /// <summary> 
+        /// Gets the current available RAM. 
+        /// </summary> 
+        /// <returns> 
+        /// A formatted string containing the amount of available memory in megabytes. 
+        /// </returns>
         public override string Get()
         {
+            try
+            {
+                using ManagementObjectSearcher searcher =
+                    new ManagementObjectSearcher(
+                        "SELECT TotalVisibleMemorySize, FreePhysicalMemory FROM Win32_OperatingSystem");
 
-            return $"RAM: {_ram.NextValue():F0} MB available";
+                ManagementObject os =
+                    searcher.Get()
+                        .Cast<ManagementObject>()
+                        .First();
+
+                ulong total = Convert.ToUInt64(os["TotalVisibleMemorySize"]);
+                ulong free = Convert.ToUInt64(os["FreePhysicalMemory"]);
+
+                ulong used = total - free;
+
+                double totalGb = total / 1024.0 / 1024.0;
+                double usedGb = used / 1024.0 / 1024.0;
+
+                double usage = (double)used / total * 100;
+
+                return $"RAM: {usedGb:F1} / {totalGb:F1} GB ({usage:F1}%)";
+            }
+            catch
+            {
+                return "RAM: Unknown";
+            }
         }
 
+        /// <summary> 
+        /// Gets detailed information about the installed physical RAM modules. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing information about each installed RAM module, 
+        /// including the manufacturer, capacity, speed, part number, 
+        /// device location, and memory type. 
+        /// </returns>
         public override List<DtoSystemInfo> SystemInfos()
         {
             ManagementObjectSearcher objectSearcher = new ManagementObjectSearcher(

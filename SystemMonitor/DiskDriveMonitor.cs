@@ -8,6 +8,10 @@ using SystemMonitor.Interface;
 
 namespace SystemMonitor
 {
+    /// <summary>
+    /// Monitors disk drives and provides information about
+    /// available storage and connected drives.
+    /// </summary>
     public class DiskDriveMonitor :SystemMonitors, IDiskDriveMonitor
     {
         private readonly string[] SizeSuffixes =
@@ -16,24 +20,51 @@ namespace SystemMonitor
         {
         }
 
+        /// <summary> 
+        /// Gets the available free space for all accessible disk drives. 
+        /// </summary> 
+        /// <returns> 
+        /// A formatted string containing the available free space 
+        /// for each accessible disk drive. 
+        /// </returns>
         public override string Get()
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
 
+            string result = "Disk: ";
 
-            string AvailableFreeSpace = "Available FreeSpace ";
             foreach (DriveInfo drive in drives)
             {
                 try
                 {
-                    if (drive.IsReady)
-                        AvailableFreeSpace += drive.Name + " " + this.SizeSuffix(drive.AvailableFreeSpace) + " ";
-                } catch { }
+                    if (!drive.IsReady)
+                        continue;
+
+                    double used =
+                        100.0 -
+                        ((double)drive.AvailableFreeSpace /
+                        drive.TotalSize * 100.0);
+
+                    result +=
+                        $"{drive.Name} {used:F1}% used | ";
+
+                }
+                catch
+                {
+                }
             }
 
-            return AvailableFreeSpace;
+            return result.TrimEnd(' ', '|');
         }
 
+        /// <summary> 
+        /// Gets detailed information about the available disk drives. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing information about each disk drive, 
+        /// including its name, format, type, available space, 
+        /// and total capacity. 
+        /// </returns>
         public override List<DtoSystemInfo> SystemInfos()
         {
 
