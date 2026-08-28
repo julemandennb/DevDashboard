@@ -1,6 +1,7 @@
-using SystemMonitor;
-using SystemMonitor.Interface;
 using System.Threading.Tasks;
+using SystemMonitor;
+using SystemMonitor.Dto;
+using SystemMonitor.Interface;
 
 namespace DevDashboard
 {
@@ -19,9 +20,14 @@ namespace DevDashboard
             {
                 var systems = await systemMonitors.GetAll();
 
-                 var fff = systems[1].SystemInfos();
+                 var SystemInfo = systems[1].SystemInfos();
 
-                var fsfse = "fgsefsef";
+                if(SystemInfo[0] is DtoSystemInfoRam ram)
+                {
+                    var fsfse = ram.Manufacturer;
+                }
+
+               
             });
         }
     }

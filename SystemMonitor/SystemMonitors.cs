@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using SystemMonitor.Dto;
 using SystemMonitor.Interface;
 
 namespace SystemMonitor
@@ -19,7 +20,7 @@ namespace SystemMonitor
                 "Get() must be implemented by a specific system monitor.");
         }
 
-        public virtual List<string> SystemInfos()
+        public virtual List<DtoSystemInfo> SystemInfos()
         {
             Debugger.Break();
             throw new NotSupportedException(
@@ -33,7 +34,8 @@ namespace SystemMonitor
                 return new List<ISystemMonitors>
                 {
                     new CpuMonitor(),
-                    new RamMonitor()
+                    new RamMonitor(),
+                    new DiskDriveMonitor(),
                 };
             });
         }

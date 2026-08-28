@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SystemMonitor.Dto;
 
 namespace SystemMonitor.Interface
 {
@@ -8,6 +9,6 @@ namespace SystemMonitor.Interface
     {
         string Get();
 
-        List<string> SystemInfos();
+        List<DtoSystemInfo> SystemInfos();
     }
 }

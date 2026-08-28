@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Management;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Transactions;
+using SystemMonitor.Dto;
 using SystemMonitor.Interface;
-using System.Management;
 
 
 namespace SystemMonitor
@@ -14,13 +16,10 @@ namespace SystemMonitor
     {
 
         private readonly PerformanceCounter _cpu;
-        private readonly ManagementObjectSearcher _objectSearcher;
 
         public CpuMonitor()
         {
-            _objectSearcher = new ManagementObjectSearcher(
-           "SELECT * FROM Win32_Processor");
-
+           
             _cpu = new PerformanceCounter(
                 "Processor",
                 "% Processor Time",
@@ -40,26 +39,45 @@ namespace SystemMonitor
             return $"CPU: {usage:F1}%";
         }
 
-        public override List<string> SystemInfos()
+        public override List<DtoSystemInfo> SystemInfos()
         {
-            var cpu = _objectSearcher
-            .Get()
-            .Cast<ManagementObject>()
-            .FirstOrDefault();
-
-            return new List<string>
+            try
             {
-                $"Name: {cpu["Name"]}",
-                $"Manufacturer: {cpu["Manufacturer"]}",
-                $"Description: {cpu["Description"]}",
-                $"Cores: {cpu["NumberOfCores"]}",
-                $"Logical Processors: {cpu["NumberOfLogicalProcessors"]}",
-                $"Max Clock Speed: {cpu["MaxClockSpeed"]} MHz",
-                $"Current Clock Speed: {cpu["CurrentClockSpeed"]} MHz",
-                $"L2 Cache: {cpu["L2CacheSize"]} KB",
-                $"L3 Cache: {cpu["L3CacheSize"]} KB",
-                $"Processor ID: {cpu["ProcessorId"]}"
-            };
+                ManagementObjectSearcher objectSearcher = new ManagementObjectSearcher(
+                "SELECT * FROM Win32_Processor");
+
+
+                var cpu = objectSearcher
+                .Get()
+                .Cast<ManagementObject>()
+                .FirstOrDefault();
+
+                if (cpu == null) 
+                    return new List<DtoSystemInfo>();
+
+
+                DtoSystemInfoCpu dtoSystemInfoCpu = new DtoSystemInfoCpu(
+                    cpu["Name"].ToString(),
+                    cpu["Manufacturer"].ToString(),
+                    cpu["Description"].ToString(),
+                    cpu["NumberOfCores"].ToString(),
+                    cpu["NumberOfLogicalProcessors"].ToString(),
+                    $"{cpu["MaxClockSpeed"]} MHz",
+                    $"{cpu["CurrentClockSpeed"]} MHz",
+                    $"{cpu["L2CacheSize"]} KB",
+                    $"{cpu["L3CacheSize"]} KB",
+                    cpu["ProcessorId"].ToString()
+                );
+
+                return new List<DtoSystemInfo>
+                {
+                    dtoSystemInfoCpu
+                };
+            }
+            catch (Exception ex)
+            {
+                return new List<DtoSystemInfo>();
+            }
         }
 
     }
