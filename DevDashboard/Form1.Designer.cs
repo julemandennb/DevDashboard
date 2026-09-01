@@ -42,6 +42,8 @@
         private Label lblNetworkTitle;
         private Label lblNetworkValue;
 
+        private System.Windows.Forms.Timer systemInfoTimer;
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -86,6 +88,9 @@
             lblDiskValue = new Label();
             lblNetworkTitle = new Label();
             lblNetworkValue = new Label();
+
+            systemInfoTimer = new System.Windows.Forms.Timer();
+
             SuspendLayout();
             // =========================================================
             // FORM
@@ -153,11 +158,8 @@
             systemNotificationList.Dock = DockStyle.Fill;
             systemNotificationList.ForeColor = Color.Gainsboro;
             systemNotificationList.Padding = new Padding(0);
-            systemNotificationList.Items.Add("System Notification 1");
-            systemNotificationList.Items.Add("System Notification 2");
-            systemNotificationList.Items.Add("System Notification 3");
-            systemNotificationList.Items.Add("System Notification 4");
-            systemNotificationList.Items.Add("System Notification 5");
+
+
             // Add Fill control first, then Top control.
             systemNotificationPanel.Controls.Add(systemNotificationList);
             systemNotificationPanel.Controls.Add(systemNotificationTitle);
@@ -206,7 +208,7 @@
             // NETWORK CARD
             // =========================================================
             ConfigureCard(networkCard);
-            lblNetworkTitle.Text = "Network";
+            lblNetworkTitle.Text = "🖧 Network";
             ConfigureCardTitle(lblNetworkTitle);
             lblNetworkValue.Text = "None";
             ConfigureCardValue(lblNetworkValue);
@@ -218,6 +220,13 @@
             // =========================================================
             // ADD TO FORM
             // =========================================================
+
+
+            systemInfoTimer.Interval = 2500; // 0.5 second
+            systemInfoTimer.Enabled = false;
+            systemInfoTimer.Tick += systemInfoTimer_Tick;
+
+
             Controls.Add(contentPanel);
             Controls.Add(sidebarPanel);
             ResumeLayout(false);
