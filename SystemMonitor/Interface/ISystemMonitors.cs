@@ -9,6 +9,8 @@ namespace SystemMonitor.Interface
     {
         string Get();
 
+        List<Decimal> GetVal();
+
         List<DtoSystemInfo> SystemInfos();
     }
 }

@@ -58,6 +58,37 @@ namespace SystemMonitor
         }
 
         /// <summary> 
+        /// Gets the percentage of used disk space for all accessible drives. 
+        /// Drives that are not ready or cannot be accessed are skipped. 
+        /// </summary> 
+        /// <returns> 
+        /// A list of decimal values representing the used disk space percentage 
+        /// for each accessible drive. 
+        /// </returns>
+        public override List<Decimal> GetVal()
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            List<Decimal> values = new List<Decimal>();
+            foreach (DriveInfo drive in drives)
+            {
+                try
+                {
+                    if (!drive.IsReady)
+                        continue;
+                    double used =
+                        100.0 -
+                        ((double)drive.AvailableFreeSpace /
+                        drive.TotalSize * 100.0);
+                    values.Add((decimal)used);
+                }
+                catch
+                {
+                }
+            }
+            return values;
+        }
+
+        /// <summary> 
         /// Gets detailed information about the available disk drives. 
         /// </summary> 
         /// <returns> 

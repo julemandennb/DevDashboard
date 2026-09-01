@@ -63,6 +63,37 @@ namespace SystemMonitor
         }
 
         /// <summary> 
+        /// Gets the current percentage of physical RAM in use. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing the current RAM usage percentage as a 
+        /// <see cref="decimal"/> value. 
+        /// Returns <c>0</c> if the RAM usage cannot be determined. 
+        /// </returns>
+        public override List<Decimal> GetVal()
+        {
+            try
+            {
+                using ManagementObjectSearcher searcher =
+                    new ManagementObjectSearcher(
+                        "SELECT TotalVisibleMemorySize, FreePhysicalMemory FROM Win32_OperatingSystem");
+                ManagementObject os =
+                    searcher.Get()
+                        .Cast<ManagementObject>()
+                        .First();
+                ulong total = Convert.ToUInt64(os["TotalVisibleMemorySize"]);
+                ulong free = Convert.ToUInt64(os["FreePhysicalMemory"]);
+                ulong used = total - free;
+                double usage = (double)used / total * 100;
+                return new List<decimal> { (decimal)usage };
+            }
+            catch
+            {
+                return new List<decimal> { 0 };
+            }
+        }
+
+        /// <summary> 
         /// Gets detailed information about the installed physical RAM modules. 
         /// </summary> 
         /// <returns> 

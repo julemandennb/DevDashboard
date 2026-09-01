@@ -48,6 +48,36 @@ namespace SystemMonitor
         }
 
         /// <summary> 
+        /// Checks the internet connection by sending a ping request 
+        /// and measures the network latency to the target server. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing the network round-trip latency in milliseconds. 
+        /// Returns <c>0</c> if the connection check fails or the target server 
+        /// cannot be reached. 
+        /// </returns>
+        public override List<Decimal> GetVal()
+        {
+            try
+            {
+                using Ping ping = new Ping();
+                PingReply reply = ping.Send("8.8.8.8",
+                    3000);
+
+                if (reply.Status == IPStatus.Success)
+                {
+                    return new List<decimal> { (decimal)reply.RoundtripTime };
+                }
+
+                return new List<decimal> { -1 };
+            }
+            catch
+            {
+                return new List<decimal> { -1 };
+            }
+        }
+
+        /// <summary> 
         /// Gets detailed information about the active network adapters. 
         /// </summary> 
         /// <returns> 

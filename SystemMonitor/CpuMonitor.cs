@@ -49,12 +49,23 @@ namespace SystemMonitor
             return $"CPU: {usage:F1}%";
         }
 
+        /// <summary>
+        /// Gets the current CPU usage in list Decimal. 
+        /// </summary>
+        /// <returns>List<Decimal></returns>
+        public override List<Decimal> GetVal()
+        {
+            Thread.Sleep(500);
+            float usage = _cpu.NextValue();
+            return new List<Decimal> { (decimal)usage };
+        }
+
         /// <summary> 
-        /// Gets detailed information about the installed CPU. 
+        /// Gets the current total CPU usage as a decimal value. 
         /// </summary> 
         /// <returns> 
-        /// A list containing detailed CPU information such as the name, 
-        /// manufacturer, core count, clock speeds, cache sizes, and processor ID. 
+        /// A list containing the current CPU usage percentage as a 
+        /// <see cref="decimal"/> value. 
         /// </returns>
         public override List<DtoSystemInfo> SystemInfos()
         {

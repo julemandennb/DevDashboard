@@ -36,6 +36,25 @@ namespace SystemMonitor
         }
 
         /// <summary> 
+        /// Gets the current monitored value as a list of decimal values. 
+        /// Derived system monitors should override this method to provide 
+        /// their monitored numeric value. 
+        /// </summary> 
+        /// <returns> 
+        /// A list containing the current monitored value or values as 
+        /// <see cref="decimal"/> values. 
+        /// </returns> 
+        /// <exception cref="NotSupportedException"> 
+        /// Thrown when the method is not implemented by a derived system monitor. 
+        /// </exception>
+        public virtual List<Decimal> GetVal()
+        {
+            Debugger.Break();
+            throw new NotSupportedException(
+                "GetVal() must be implemented by a specific system monitor.");
+        }
+
+        /// <summary> 
         /// Gets detailed system information collected by the specific system monitor. 
         /// </summary> 
         /// <returns> 
