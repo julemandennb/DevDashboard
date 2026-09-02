@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pomodoro\Timers.csproj" />
     <ProjectReference Include="..\SystemMonitor\SystemMonitor.csproj" />
   </ItemGroup>
 

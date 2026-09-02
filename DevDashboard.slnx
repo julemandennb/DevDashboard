@@ -3,5 +3,6 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="DevDashboard/DevDashboard.csproj" />
+  <Project Path="Pomodoro/Timers.csproj" Id="ebe532fd-3ea4-4e04-a52d-3b6a3e2dcd34" />
   <Project Path="SystemMonitor/SystemMonitor.csproj" />
 </Solution>
