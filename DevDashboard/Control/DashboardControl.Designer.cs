@@ -2,6 +2,26 @@
 {
     partial class DashboardControl
     {
+
+        private bool darkMode = true;
+
+        public bool DarkMode
+        {
+            get => darkMode;
+            set
+            {
+                if (darkMode == value) return;
+                darkMode = value;
+                ApplyTheme();
+            }
+        }
+
+        private Color Darkcolor = Color.FromArgb(18, 18, 18);
+
+        private Color Lightcolor = Color.FromArgb(240, 240, 240);
+
+
+
         private System.ComponentModel.IContainer components = null;
 
         private Panel systemNotificationPanel;
@@ -107,8 +127,8 @@
             // DASHBOARD CONTROL
             // =========================================================
 
-            BackColor =
-                Color.FromArgb(18, 18, 18);
+            BackColor = DarkMode ? Darkcolor : Lightcolor;
+               
 
             Dock =
                 DockStyle.Fill;
@@ -117,8 +137,7 @@
             // SYSTEM NOTIFICATION
             // =========================================================
 
-            systemNotificationPanel.BackColor =
-                Color.FromArgb(18, 18, 18);
+            systemNotificationPanel.BackColor = DarkMode ? Darkcolor : Lightcolor;
 
             systemNotificationPanel.Dock =
                 DockStyle.Fill;
@@ -143,20 +162,19 @@
                     FontStyle.Regular);
 
             systemNotificationTitle.ForeColor =
-                Color.Gainsboro;
+                DarkMode ? Color.Gainsboro : Color.Black;
 
             systemNotificationTitle.Margin =
                 new Padding(0);
 
             // List
-            systemNotificationList.BackColor =
-                Color.FromArgb(18, 18, 18);
+            systemNotificationList.BackColor = DarkMode ? Darkcolor : Lightcolor;
 
             systemNotificationList.Dock =
                 DockStyle.Fill;
 
             systemNotificationList.ForeColor =
-                Color.Gainsboro;
+                DarkMode ? Color.Gainsboro : Color.Black;
 
             systemNotificationList.Padding =
                 new Padding(0);
@@ -338,7 +356,7 @@
             Panel card)
         {
             card.BackColor =
-                Color.FromArgb(28, 28, 30);
+                DarkMode ? Color.FromArgb(28, 28, 30) : Color.FromArgb(201, 201, 201);
 
             card.Dock =
                 DockStyle.Fill;
@@ -362,7 +380,7 @@
                     FontStyle.Regular);
 
             label.ForeColor =
-                Color.Gainsboro;
+                DarkMode ? Color.Gainsboro : Color.Black;
 
             label.Location =
                 new Point(20, 20);
@@ -380,7 +398,7 @@
                     FontStyle.Bold);
 
             label.ForeColor =
-                Color.White;
+                DarkMode ? Color.White : Color.Black;
 
             label.Location =
                 new Point(20, 55);
@@ -414,6 +432,50 @@
                 new RowStyle(
                     SizeType.Percent,
                     100F));
+        }
+
+        private void ApplyTheme()
+        {
+            // Safe-checks because this may be called before designer has fully
+            // initialized all controls at runtime.
+            Color bg = DarkMode ? Darkcolor : Lightcolor;
+
+            try
+            {
+                BackColor = bg;
+            }
+            catch
+            {
+            }
+
+            if (systemNotificationPanel != null)
+                systemNotificationPanel.BackColor = bg;
+
+            if (systemNotificationTitle != null)
+                systemNotificationTitle.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+
+            if (systemNotificationList != null)
+            {
+                systemNotificationList.BackColor = bg;
+                systemNotificationList.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            Color cardBg = DarkMode ? Color.FromArgb(28, 28, 30) : Color.FromArgb(201, 201, 201);
+
+            if (cpuCard != null) cpuCard.BackColor = cardBg;
+            if (ramCard != null) ramCard.BackColor = cardBg;
+            if (diskCard != null) diskCard.BackColor = cardBg;
+            if (networkCard != null) networkCard.BackColor = cardBg;
+
+            if (lblCpuTitle != null) lblCpuTitle.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            if (lblRamTitle != null) lblRamTitle.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            if (lblDiskTitle != null) lblDiskTitle.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            if (lblNetworkTitle != null) lblNetworkTitle.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+
+            if (lblCpuValue != null) lblCpuValue.ForeColor = DarkMode ? Color.White : Color.Black;
+            if (lblRamValue != null) lblRamValue.ForeColor = DarkMode ? Color.White : Color.Black;
+            if (lblDiskValue != null) lblDiskValue.ForeColor = DarkMode ? Color.White : Color.Black;
+            if (lblNetworkValue != null) lblNetworkValue.ForeColor = DarkMode ? Color.White : Color.Black;
         }
 
         #endregion

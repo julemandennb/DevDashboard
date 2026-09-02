@@ -4,6 +4,23 @@
     {
         private System.ComponentModel.IContainer components = null;
 
+        private bool darkMode = true;
+
+        public bool DarkMode
+        {
+            get => darkMode;
+            set
+            {
+                if (darkMode == value) return;
+                darkMode = value;
+                ApplyTheme();
+            }
+        }
+
+        private Color Darkcolor = Color.FromArgb(18, 18, 18);
+
+        private Color Lightcolor = Color.FromArgb(240, 240, 240);
+
         private Panel sidebarPanel;
         private Panel contentPanel;
         private Label lblLogo;
@@ -49,7 +66,7 @@
             // =========================================================
 
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(18, 18, 18);
+            BackColor = DarkMode ? Darkcolor : Lightcolor;
             ClientSize = new Size(1100, 700);
             MinimumSize = new Size(900, 600);
             StartPosition = FormStartPosition.CenterScreen;
@@ -59,7 +76,7 @@
             // SIDEBAR
             // =========================================================
 
-            sidebarPanel.BackColor = Color.FromArgb(24, 24, 24);
+            sidebarPanel.BackColor = DarkMode ? Color.FromArgb(24, 24, 24) : Color.FromArgb(234, 234, 234);
             sidebarPanel.Dock = DockStyle.Left;
             sidebarPanel.Padding = new Padding(15);
             sidebarPanel.Size = new Size(210, 700);
@@ -71,7 +88,7 @@
                 16F,
                 FontStyle.Bold);
 
-            lblLogo.ForeColor = Color.White;
+            lblLogo.ForeColor = DarkMode ? Color.White : Color.Black;
             lblLogo.Location = new Point(5, 25);
             lblLogo.Text = "⚡ DevDashboard";
 
@@ -82,9 +99,6 @@
                 btnDashboard,
                 "⌂  Dashboard",
                 75);
-
-            btnDashboard.BackColor =
-                Color.FromArgb(45, 45, 48);
 
             btnDashboard.Click += btnDashboard_Click;
 
@@ -145,7 +159,7 @@
             // =========================================================
 
             contentPanel.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode ? Darkcolor : Lightcolor;
 
             contentPanel.Dock =
                 DockStyle.Fill;
@@ -177,10 +191,10 @@
             button.FlatAppearance.BorderSize = 0;
 
             button.BackColor =
-                Color.FromArgb(24, 24, 24);
+                DarkMode ? Color.FromArgb(24, 24, 24) : Color.FromArgb(234, 234, 234); ;
 
             button.ForeColor =
-                Color.Gainsboro;
+                DarkMode ? Color.Gainsboro : Color.Black;
 
             button.Font = new Font(
                 "Segoe UI",
@@ -200,6 +214,58 @@
 
             button.Cursor =
                 Cursors.Hand;
+        }
+
+        private void ApplyTheme()
+        {
+            Color bg = DarkMode ? Darkcolor : Lightcolor;
+
+            try { BackColor = bg; } catch { }
+
+            if (sidebarPanel != null)
+                sidebarPanel.BackColor = DarkMode ? Color.FromArgb(24, 24, 24) : Color.FromArgb(234, 234, 234); ;
+
+            if (contentPanel != null)
+                contentPanel.BackColor = bg;
+
+            if (lblLogo != null)
+                lblLogo.ForeColor = DarkMode ? Color.White : Color.Black;
+
+            if (btnDashboard != null)
+            {
+                btnDashboard.BackColor = DarkMode ? Color.FromArgb(45, 45, 48) : Lightcolor;
+                btnDashboard.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            if (btnPomodoro != null)
+            {
+                btnPomodoro.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnPomodoro.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            if (btnClipboard != null)
+            {
+                btnClipboard.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnClipboard.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            if (btnLauncher != null)
+            {
+                btnLauncher.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnLauncher.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            if (btnGitHub != null)
+            {
+                btnGitHub.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnGitHub.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
+
+            if (btnSettings != null)
+            {
+                btnSettings.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnSettings.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+            }
         }
 
         #endregion
