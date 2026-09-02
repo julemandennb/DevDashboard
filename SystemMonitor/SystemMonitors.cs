@@ -88,6 +88,7 @@ namespace SystemMonitor
                     new RamMonitor(),
                     new DiskDriveMonitor(),
                     new InternetMonitor(),
+                    new EventLogMonitor(),
                 };
             });
         }

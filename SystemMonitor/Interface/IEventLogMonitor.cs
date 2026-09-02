@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SystemMonitor.Interface
 {
-    public interface IDiskDriveMonitor : ISystemMonitors
+    public interface IEventLogMonitor : ISystemMonitors
     {
     }
 }
