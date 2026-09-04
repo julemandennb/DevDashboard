@@ -16,7 +16,7 @@ namespace DevDashboard.Control
 {
     public partial class DashboardControl : UserControl
     {
-        private List<ISystemMonitors> _systems;
+        private List<ISystemMonitors> _systems = new List<ISystemMonitors>();
 
         public DashboardControl()
         {

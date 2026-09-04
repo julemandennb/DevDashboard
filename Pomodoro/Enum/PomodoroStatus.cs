@@ -6,6 +6,8 @@
         Working,
         ShortBreak,
         LongBreak,
-        Paused
+        Paused,
+        Stopped,
+        Completed
     }
 }

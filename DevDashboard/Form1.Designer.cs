@@ -26,7 +26,7 @@
         private Label lblLogo;
 
         private Button btnDashboard;
-        private Button btnPomodoro;
+        private Button btnTimers;
         private Button btnClipboard;
         private Button btnLauncher;
         private Button btnGitHub;
@@ -53,7 +53,7 @@
             lblLogo = new Label();
 
             btnDashboard = new Button();
-            btnPomodoro = new Button();
+            btnTimers = new Button();
             btnClipboard = new Button();
             btnLauncher = new Button();
             btnGitHub = new Button();
@@ -106,13 +106,13 @@
 
             // Pomodoro
             ConfigureMenuButton(
-                btnPomodoro,
-                "◷  Pomodoro",
+                btnTimers,
+                "◷  Times",
                 125);
 
-            btnPomodoro.Click += btnPomodoro_Click;
+            btnTimers.Click += btnTimers_Click;
 
-            sidebarPanel.Controls.Add(btnPomodoro);
+            sidebarPanel.Controls.Add(btnTimers);
 
             // Clipboard
             ConfigureMenuButton(
@@ -237,10 +237,10 @@
                 btnDashboard.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
             }
 
-            if (btnPomodoro != null)
+            if (btnTimers != null)
             {
-                btnPomodoro.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
-                btnPomodoro.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
+                btnTimers.BackColor = DarkMode ? Color.FromArgb(24,24,24) : Lightcolor;
+                btnTimers.ForeColor = DarkMode ? Color.Gainsboro : Color.Black;
             }
 
             if (btnClipboard != null)

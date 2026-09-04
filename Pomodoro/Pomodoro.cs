@@ -6,7 +6,7 @@ namespace Timers
 {
     public class Pomodoro : IPomodoro
     {
-        private readonly PomodoroSettings _settings;
+        private PomodoroSettings _settings;
 
         private int _remainingSeconds;
 
@@ -34,6 +34,12 @@ namespace Timers
         {
             _settings = settings;
 
+            Reset();
+        }
+
+        public void SetSettings(PomodoroSettings settings)
+        {
+            _settings = settings;
             Reset();
         }
 
