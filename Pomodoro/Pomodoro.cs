@@ -1,4 +1,5 @@
-﻿using Timers.Dto;
+﻿using Audio;
+using Timers.Dto;
 using Timers.Enum;
 using Timers.Interface;
 
@@ -10,28 +11,34 @@ namespace Timers
 
         private int _remainingSeconds;
 
-        public PomodoroStatus Status { get; private set; }
+        private string _soundsPath = "";
+
+        private readonly SoundPlayerService _soundPlayerService = new SoundPlayerService();
+
+        public Status _status { get; private set; }
 
         public TimeSpan Remaining =>
             TimeSpan.FromSeconds(_remainingSeconds);
 
         public bool IsRunning =>
-            Status == PomodoroStatus.Working ||
-            Status == PomodoroStatus.ShortBreak ||
-            Status == PomodoroStatus.LongBreak;
+            _status == Status.Working ||
+            _status == Status.ShortBreak ||
+            _status == Status.LongBreak;
 
         public bool IsWorkSession =>
-            Status == PomodoroStatus.Working;
+            _status == Status.Working;
 
         public int CompletedPomodoros { get; private set; }
 
-        public Pomodoro()
+        public Pomodoro(string soundsPath)
         {
+            _soundsPath = soundsPath;
             _settings = new PomodoroSettings();
         }
 
-        public Pomodoro(PomodoroSettings settings)
+        public Pomodoro(PomodoroSettings settings,string soundsPath)
         {
+            _soundsPath = soundsPath;
             _settings = settings;
 
             Reset();
@@ -40,18 +47,24 @@ namespace Timers
         public void SetSettings(PomodoroSettings settings)
         {
             _settings = settings;
-            Reset();
+            if (_status != Status.Paused)
+                Reset();
+        }
+
+        public void SetSoundsPath(string soundsPath)
+        {
+            _soundsPath = soundsPath;
         }
 
         public void Start()
         {
-            if (Status == PomodoroStatus.Ready)
+            if (_status == Status.Ready)
             {
-                Status = PomodoroStatus.Working;
+                _status = Status.Working;
             }
-            else if (Status == PomodoroStatus.Paused)
+            else if (_status == Status.Paused)
             {
-                Status = PomodoroStatus.Working;
+                _status = Status.Working;
             }
         }
 
@@ -59,13 +72,13 @@ namespace Timers
         {
             if (IsRunning)
             {
-                Status = PomodoroStatus.Paused;
+                _status = Status.Paused;
             }
         }
 
         public void Reset()
         {
-            Status = PomodoroStatus.Ready;
+            _status = Status.Ready;
 
             _remainingSeconds =
                 _settings.WorkMinutes * 60;
@@ -93,21 +106,21 @@ namespace Timers
 
         private void NextSession()
         {
-            if (Status == PomodoroStatus.Working)
+            if (_status == Status.Working)
             {
                 CompletedPomodoros++;
 
                 if (CompletedPomodoros %
                     _settings.PomodorosBeforeLongBreak == 0)
                 {
-                    Status = PomodoroStatus.LongBreak;
+                    _status = Status.LongBreak;
 
                     _remainingSeconds =
                         _settings.LongBreakMinutes * 60;
                 }
                 else
                 {
-                    Status = PomodoroStatus.ShortBreak;
+                    _status = Status.ShortBreak;
 
                     _remainingSeconds =
                         _settings.ShortBreakMinutes * 60;
@@ -115,11 +128,13 @@ namespace Timers
             }
             else
             {
-                Status = PomodoroStatus.Working;
+                _status = Status.Working;
 
                 _remainingSeconds =
                     _settings.WorkMinutes * 60;
             }
+
+            _soundPlayerService.Play(_soundsPath);
         }
     }
 }

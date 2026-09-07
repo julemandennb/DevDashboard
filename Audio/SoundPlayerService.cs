@@ -9,6 +9,7 @@ namespace Audio
     {
         public void Play(string filePath)
         {
+            filePath = Path.Combine(filePath, "test.wav");
             if (!File.Exists(filePath))
                 return;
 

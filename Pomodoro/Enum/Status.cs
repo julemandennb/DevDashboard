@@ -1,6 +1,6 @@
 ﻿namespace Timers.Enum
 {
-    public enum PomodoroStatus
+    public enum Status
     {
         Ready,
         Working,

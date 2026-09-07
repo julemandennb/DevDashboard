@@ -1,23 +1,18 @@
 ﻿using System;
+using Timers.Dto;
 
 namespace Timers.Interface
 {
-    public interface IPomodoro
+    public interface IPomodoro:ITimer
     {
         TimeSpan Remaining { get; }
-
-        bool IsRunning { get; }
 
         bool IsWorkSession { get; }
 
         int CompletedPomodoros { get; }
+        void SetSettings(PomodoroSettings settings);
 
-        void Start();
-
-        void Pause();
-
-        void Reset();
-
-        void Tick();
+        void SetSoundsPath(string soundsPath);
+       
     }
 }

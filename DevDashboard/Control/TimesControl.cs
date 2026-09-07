@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DevDashboard.Services;
+using System;
+using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Runtime;
 using System.Windows.Forms;
 using Timers;
@@ -11,6 +14,9 @@ namespace DevDashboard.Control
         private readonly Pomodoro _pomodoro;
         private readonly System.Windows.Forms.Timer _timerPomodoro;
         private PomodoroSettings _pomodoroSetting;
+
+        private StopWatch _StopWatch;
+        private readonly System.Windows.Forms.Timer _timerStopWatch;
 
 
         public TimesControl()
@@ -26,7 +32,7 @@ namespace DevDashboard.Control
                     PomodorosBeforeLongBreak = 4
                 };
 
-                _pomodoro = new Pomodoro(_pomodoroSetting);
+                _pomodoro = new Pomodoro(_pomodoroSetting, UserDataService.Sounds);
 
                 _timerPomodoro = new System.Windows.Forms.Timer
                 {
@@ -36,6 +42,14 @@ namespace DevDashboard.Control
                 _timerPomodoro.Tick += Timer_Tick_Pomodoro;
             #endregion
 
+            _StopWatch = new StopWatch();
+            _timerStopWatch = new System.Windows.Forms.Timer
+            {
+                Interval = 1000
+            };
+            _timerStopWatch.Tick += Timer_Tick_StopWatch;
+
+
             UpdateUi();
         }
 
@@ -43,6 +57,8 @@ namespace DevDashboard.Control
         {
             this.UpdateUiPomodoro();
             this.UpdateUiPomodoroSetting();
+
+            this.UpdateUiStopWatch();
         }
 
         #region Pomodoro
@@ -97,7 +113,7 @@ namespace DevDashboard.Control
                 $"{(int)remaining.TotalMinutes:00}:{remaining.Seconds:00}";
 
             lblStatus.Text =
-                _pomodoro.Status.ToString();
+                _pomodoro._status.ToString();
 
             lblCompletedPomodoro.Text =
                 $"Completed: {_pomodoro.CompletedPomodoros}";
@@ -129,5 +145,56 @@ namespace DevDashboard.Control
         }
 
         #endregion
+
+        private void btnStartStopWatch_Click(object? sender, EventArgs e)
+        {
+            _StopWatch.Start();
+
+            _timerStopWatch.Start();
+
+            UpdateUi();
+        }
+
+        private void btnPauseStopWatch_Click(object? sender, EventArgs e)
+        {
+            _StopWatch.Pause();
+
+            _timerStopWatch.Stop();
+
+            UpdateUi();
+        }
+
+        private void btnResetStopWatch_Click(object? sender, EventArgs e)
+        {
+
+            _StopWatch.Reset();
+
+            _timerStopWatch.Stop();
+
+            UpdateUi();
+        }
+
+
+        private void Timer_Tick_StopWatch(object? sender, EventArgs e)
+        {
+            _StopWatch.Tick();
+            UpdateUi();
+        }
+
+        private void UpdateUiStopWatch()
+        {
+            TimeSpan remaining = _StopWatch.TotalTime;
+
+            lblStopWatchTime.Text =
+                $"{(int)remaining.TotalMinutes:00}:{remaining.Seconds:00}";
+
+
+            btnStartStopWatch.Enabled =
+                !_StopWatch.IsRunning;
+
+            btnPauseStopWatch.Enabled =
+                _StopWatch.IsRunning;
+
+        }
     }
 }
