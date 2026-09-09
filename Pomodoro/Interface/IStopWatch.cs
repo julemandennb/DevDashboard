@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Timers.Interface
 {
-    internal interface IStopWatch : ITimer
+    public interface IStopWatch : ITimer
     {
         TimeSpan TotalTime { get; }
     }

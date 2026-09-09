@@ -70,13 +70,33 @@ namespace DevDashboard.Control
 
         //End STOPWATCH
 
+        private Label lblAlarmTitle;
+
+
         private TableLayoutPanel timesLayout;
         private Panel alarmPanel;
-        private DateTimePicker dtpAlarmTime;
-        private Button btnSetAlarm;
-        private Button btnCancelAlarm;
-        private Label lblAlarmStatus;
 
+        private Label showTimeAlarm;
+
+
+        private TableLayoutPanel alarmSettingsGroupBox;
+
+        private Panel hourAlarmCard;
+        private Label lblHourAlarm;
+        private NumericUpDown hourPickerAlarm;
+
+        private Panel minuteAlarmCard;
+        private Label lblMinuteAlarm;
+        private NumericUpDown minutePickerAlarm;
+
+        private Panel secondAlarmCard;
+        private Label lblSecondAlarm;
+        private NumericUpDown secondPickerAlarm;
+
+        private Button btnSetAlarm;
+        private Button btnPauselAlarm;
+        private Button btnResetAlarm;
+        
 
 
 
@@ -150,12 +170,30 @@ namespace DevDashboard.Control
             btnStartStopWatch = new Button();
             btnPauseStopWatch = new Button();
             btnResetStopWatch = new Button();
-        // ALARM
-        alarmPanel = new Panel();
-            dtpAlarmTime = new DateTimePicker();
+            // ALARM
+
+            lblAlarmTitle = new Label();
+            alarmPanel = new Panel();
+
+            showTimeAlarm = new Label();
+
+            alarmSettingsGroupBox = new TableLayoutPanel();
+
+            hourAlarmCard = new Panel();
+            lblHourAlarm = new Label();
+            hourPickerAlarm = new NumericUpDown();
+
+            minuteAlarmCard = new Panel();
+            lblMinuteAlarm = new Label();
+            minutePickerAlarm = new NumericUpDown();
+
+            secondAlarmCard = new Panel();
+            lblSecondAlarm = new Label();
+            secondPickerAlarm = new NumericUpDown();
+
             btnSetAlarm = new Button();
-            btnCancelAlarm = new Button();
-            lblAlarmStatus = new Label();
+            btnPauselAlarm = new Button();
+            btnResetAlarm = new Button();
             timesLayout = new TableLayoutPanel();
             //end STOPWATCH
 
@@ -754,6 +792,304 @@ namespace DevDashboard.Control
                         ? Color.FromArgb(28, 28, 30)
                         : Color.FromArgb(201, 201, 201);
 
+
+
+            showTimeAlarm.Text =
+                "00:00:00";
+
+            showTimeAlarm.AutoSize =
+                    true;
+
+            showTimeAlarm.Font =
+                    new Font(
+                        "Segoe UI",
+                        48F,
+                        FontStyle.Bold);
+
+            showTimeAlarm.ForeColor =
+                    DarkMode
+                        ? Color.White
+                        : Color.Black;
+
+            showTimeAlarm.Location =
+                    new Point(20, 50);
+
+            showTimeAlarm.Hide();
+
+            alarmPanel.Controls.Add(showTimeAlarm);
+
+            // =========================================================
+            // TITLE
+            // =========================================================
+
+            lblAlarmTitle.Text =
+                "Alarm";
+
+            lblAlarmTitle.AutoSize =
+                true;
+
+            lblAlarmTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    18F,
+                    FontStyle.Regular);
+
+            lblAlarmTitle.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            lblAlarmTitle.Location =
+                new Point(20, 10);
+
+            alarmPanel.Controls.Add(lblAlarmTitle);
+
+            // =========================================================
+            // Alarm Settings
+            // =========================================================
+
+            alarmSettingsGroupBox.ColumnCount = 3;
+            alarmSettingsGroupBox.RowCount = 1;
+
+            alarmSettingsGroupBox.Dock =
+            DockStyle.None;
+
+            alarmSettingsGroupBox.Location =
+                new Point(20, 65);
+
+            alarmSettingsGroupBox.Size =
+                new Size(300, 150);
+
+            alarmSettingsGroupBox.Height = 70;
+
+            alarmSettingsGroupBox.Padding =
+                new Padding(0, 10, 0, 0);
+
+            alarmSettingsGroupBox.ColumnStyles.Add(
+            new ColumnStyle(SizeType.Percent, 25F));
+
+            alarmSettingsGroupBox.ColumnStyles.Add(
+                new ColumnStyle(SizeType.Percent, 25F));
+
+            alarmSettingsGroupBox.ColumnStyles.Add(
+                new ColumnStyle(SizeType.Percent, 25F));
+
+            alarmSettingsGroupBox.ColumnStyles.Add(
+                new ColumnStyle(SizeType.Percent, 25F));
+
+            alarmSettingsGroupBox.RowStyles.Add(
+                new RowStyle(
+                    SizeType.Percent,
+                    100F));
+
+            alarmPanel.Controls.Add(alarmSettingsGroupBox);
+
+            // ---------------------------------------------------------
+            // Hour set
+            // ---------------------------------------------------------
+
+
+            ConfigureCard(hourAlarmCard);
+
+            lblHourAlarm.AutoSize = true;
+            lblHourAlarm.Text = "Hours";
+            lblHourAlarm.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            hourPickerAlarm.Location = new Point(10, 24);
+            hourPickerAlarm.Minimum = 0;
+            hourPickerAlarm.Maximum = 120;
+            hourPickerAlarm.Value = 25;
+            hourPickerAlarm.Name = "hourPickerAlarm";
+            hourPickerAlarm.Size = new Size(100, 23);
+
+            hourAlarmCard.Controls.Add(
+                lblHourAlarm);
+
+            hourAlarmCard.Controls.Add(
+                hourPickerAlarm);
+
+            alarmSettingsGroupBox.Controls.Add(
+                hourAlarmCard,
+                0,
+                0);
+
+            // ---------------------------------------------------------
+            // Minute set
+            // ---------------------------------------------------------
+
+
+            ConfigureCard(minuteAlarmCard);
+
+            lblMinuteAlarm.AutoSize = true;
+            lblMinuteAlarm.Text = "Minute";
+            lblMinuteAlarm.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            minutePickerAlarm.Location = new Point(10, 24);
+            minutePickerAlarm.Minimum = 0;
+            minutePickerAlarm.Maximum = 120;
+            minutePickerAlarm.Value = 25;
+            minutePickerAlarm.Name = "minutePickerAlarm";
+            minutePickerAlarm.Size = new Size(100, 23);
+
+            minuteAlarmCard.Controls.Add(
+                lblMinuteAlarm);
+
+            minuteAlarmCard.Controls.Add(
+                minutePickerAlarm);
+
+            alarmSettingsGroupBox.Controls.Add(
+                minuteAlarmCard,
+                1,
+                0);
+
+            // ---------------------------------------------------------
+            //  Second set
+            // ---------------------------------------------------------
+
+
+            ConfigureCard(secondAlarmCard);
+
+            lblSecondAlarm.AutoSize = true;
+            lblSecondAlarm.Text = "Second";
+            lblSecondAlarm.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            secondPickerAlarm.Location = new Point(10, 24);
+            secondPickerAlarm.Minimum = 0;
+            secondPickerAlarm.Maximum = 120;
+            secondPickerAlarm.Value = 25;
+            secondPickerAlarm.Name = "secondPickerAlarm";
+            secondPickerAlarm.Size = new Size(100, 23);
+
+            secondAlarmCard.Controls.Add(
+                lblSecondAlarm);
+
+            secondAlarmCard.Controls.Add(
+                secondPickerAlarm);
+
+            alarmSettingsGroupBox.Controls.Add(
+                secondAlarmCard,
+                2,
+                0);
+
+
+            // =========================================================
+            // START BUTTON
+            // =========================================================
+
+            btnSetAlarm.Text =
+                "▶ Start";
+
+            btnSetAlarm.Size =
+                new Size(90, 35);
+
+            btnSetAlarm.Location =
+                new Point(20, 165);
+
+            btnSetAlarm.FlatStyle =
+                FlatStyle.Flat;
+
+            btnSetAlarm.FlatAppearance.BorderSize =
+                0;
+
+            btnSetAlarm.BackColor =
+                DarkMode
+                    ? Color.FromArgb(45, 45, 48)
+                    : Color.FromArgb(220, 220, 220);
+
+            btnSetAlarm.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            btnSetAlarm.UseVisualStyleBackColor =
+                false;
+
+            btnSetAlarm.Click +=
+                btnSetAlarm_Click;
+
+            alarmPanel.Controls.Add(btnSetAlarm);
+
+            // =========================================================
+            // PAUSE BUTTON
+            // =========================================================
+
+            btnPauselAlarm.Text =
+                "⏸ Pause";
+
+            btnPauselAlarm.Size =
+                new Size(90, 35);
+
+            btnPauselAlarm.Location =
+                new Point(120, 165);
+
+            btnPauselAlarm.FlatStyle =
+                FlatStyle.Flat;
+
+            btnPauselAlarm.FlatAppearance.BorderSize =
+                0;
+
+            btnPauselAlarm.BackColor =
+                DarkMode
+                    ? Color.FromArgb(45, 45, 48)
+                    : Color.FromArgb(220, 220, 220);
+
+            btnPauselAlarm.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            btnPauselAlarm.UseVisualStyleBackColor =
+                false;
+
+            btnPauselAlarm.Click += btnPauselAlarm_Click;
+
+            alarmPanel.Controls.Add(btnPauselAlarm);
+
+            // =========================================================
+            // RESET BUTTON
+            // =========================================================
+
+            btnResetAlarm.Text =
+                "↻ Reset";
+
+            btnResetAlarm.Size =
+                new Size(90, 35);
+
+            btnResetAlarm.Location =
+                new Point(220, 165);
+
+            btnResetAlarm.FlatStyle =
+                FlatStyle.Flat;
+
+            btnResetAlarm.FlatAppearance.BorderSize =
+                0;
+
+            btnResetAlarm.BackColor =
+                DarkMode
+                    ? Color.FromArgb(45, 45, 48)
+                    : Color.FromArgb(220, 220, 220);
+
+            btnResetAlarm.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            btnResetAlarm.UseVisualStyleBackColor =
+                false;
+
+            btnResetAlarm.Click += btnResetAlarm_Click;
+
+            alarmPanel.Controls.Add(btnResetAlarm);
+
             // =========================================================
             // END alarm
             // =========================================================
@@ -837,35 +1173,38 @@ namespace DevDashboard.Control
 
         private void ApplyTheme()
         {
-            Color bg =
-                DarkMode
-                    ? Darkcolor
-                    : Lightcolor;
+            Color bg = DarkMode
+                ? Darkcolor
+                : Lightcolor;
 
-            Color panelBackground =
-                DarkMode
-                    ? Color.FromArgb(28, 28, 30)
-                    : Color.FromArgb(201, 201, 201);
+            Color panelBackground = DarkMode
+                ? Color.FromArgb(28, 28, 30)
+                : Color.FromArgb(201, 201, 201);
 
-            Color foreground =
-                DarkMode
-                    ? Color.Gainsboro
-                    : Color.Black;
+            Color foreground = DarkMode
+                ? Color.Gainsboro
+                : Color.Black;
 
-            Color timerForeground =
-                DarkMode
-                    ? Color.White
-                    : Color.Black;
+            Color timerForeground = DarkMode
+                ? Color.White
+                : Color.Black;
 
-            Color buttonBackground =
-                DarkMode
-                    ? Color.FromArgb(45, 45, 48)
-                    : Color.FromArgb(220, 220, 220);
+            Color buttonBackground = DarkMode
+                ? Color.FromArgb(45, 45, 48)
+                : Color.FromArgb(220, 220, 220);
 
-            Color buttonForeground =
-                DarkMode
-                    ? Color.White
-                    : Color.Black;
+            Color buttonForeground = DarkMode
+                ? Color.White
+                : Color.Black;
+
+            Color numericBackground = DarkMode
+                ? Color.FromArgb(45, 45, 48)
+                : Color.White;
+
+            Color numericForeground = DarkMode
+                ? Color.White
+                : Color.Black;
+
 
             // =============================================================
             // MAIN CONTROL
@@ -873,17 +1212,23 @@ namespace DevDashboard.Control
 
             BackColor = bg;
 
+
             // =============================================================
-            // POMODORO PANEL
+            // PANELS
             // =============================================================
 
             if (pomodoroPanel != null)
-            {
                 pomodoroPanel.BackColor = panelBackground;
-            }
+
+            if (stopWatchPanel != null)
+                stopWatchPanel.BackColor = panelBackground;
+
+            if (alarmPanel != null)
+                alarmPanel.BackColor = panelBackground;
+
 
             // =============================================================
-            // LABELS
+            // POMODORO LABELS
             // =============================================================
 
             if (lblPomodoroTitle != null)
@@ -910,8 +1255,9 @@ namespace DevDashboard.Control
             if (lblPomodorosBeforeLongBreak != null)
                 lblPomodorosBeforeLongBreak.ForeColor = foreground;
 
+
             // =============================================================
-            // SETTINGS CARDS
+            // POMODORO CARDS
             // =============================================================
 
             if (nudWorkMinutesCard != null)
@@ -926,19 +1272,10 @@ namespace DevDashboard.Control
             if (nudPomodorosBeforeLongCard != null)
                 nudPomodorosBeforeLongCard.BackColor = panelBackground;
 
-            // =============================================================
-            // NUMERIC UP/DOWN CONTROLS
-            // =============================================================
 
-            Color numericBackground =
-                DarkMode
-                    ? Color.FromArgb(45, 45, 48)
-                    : Color.White;
-
-            Color numericForeground =
-                DarkMode
-                    ? Color.White
-                    : Color.Black;
+            // =============================================================
+            // POMODORO NUMERIC UP/DOWN
+            // =============================================================
 
             if (nudWorkMinutes != null)
             {
@@ -964,8 +1301,9 @@ namespace DevDashboard.Control
                 nudPomodorosBeforeLongBreak.ForeColor = numericForeground;
             }
 
+
             // =============================================================
-            // SETTINGS GROUP
+            // POMODORO SETTINGS GROUP
             // =============================================================
 
             if (PomodoroSettingsGroupBox != null)
@@ -974,8 +1312,9 @@ namespace DevDashboard.Control
                 PomodoroSettingsGroupBox.ForeColor = foreground;
             }
 
+
             // =============================================================
-            // BUTTONS
+            // POMODORO BUTTONS
             // =============================================================
 
             if (btnStartPomodoro != null)
@@ -996,25 +1335,112 @@ namespace DevDashboard.Control
                 btnResetPomodoro.ForeColor = buttonForeground;
             }
 
+
             // =============================================================
-            // ALARM CONTROLS
+            // STOPWATCH
             // =============================================================
 
-            if (alarmPanel != null)
+            if (lblStopWatchTitle != null)
+                lblStopWatchTitle.ForeColor = foreground;
+
+            if (lblStopWatchTime != null)
+                lblStopWatchTime.ForeColor = timerForeground;
+
+            if (btnStartStopWatch != null)
             {
-                alarmPanel.BackColor = panelBackground;
+                btnStartStopWatch.BackColor = buttonBackground;
+                btnStartStopWatch.ForeColor = buttonForeground;
             }
 
-            if (lblAlarmStatus != null)
-                lblAlarmStatus.ForeColor = foreground;
-
-            if (dtpAlarmTime != null)
+            if (btnPauseStopWatch != null)
             {
-                dtpAlarmTime.CalendarForeColor = numericForeground;
-                dtpAlarmTime.CalendarMonthBackground = numericBackground;
-                dtpAlarmTime.ForeColor = numericForeground;
-                dtpAlarmTime.BackColor = numericBackground;
+                btnPauseStopWatch.BackColor = buttonBackground;
+                btnPauseStopWatch.ForeColor = buttonForeground;
             }
+
+            if (btnResetStopWatch != null)
+            {
+                btnResetStopWatch.BackColor = buttonBackground;
+                btnResetStopWatch.ForeColor = buttonForeground;
+            }
+
+
+            // =============================================================
+            // ALARM
+            // =============================================================
+
+            if (lblAlarmTitle != null)
+                lblAlarmTitle.ForeColor = foreground;
+
+            if (showTimeAlarm != null)
+                showTimeAlarm.ForeColor = timerForeground;
+
+
+            // =============================================================
+            // ALARM CARDS
+            // =============================================================
+
+            if (hourAlarmCard != null)
+                hourAlarmCard.BackColor = panelBackground;
+
+            if (minuteAlarmCard != null)
+                minuteAlarmCard.BackColor = panelBackground;
+
+            if (secondAlarmCard != null)
+                secondAlarmCard.BackColor = panelBackground;
+
+
+            // =============================================================
+            // ALARM LABELS
+            // =============================================================
+
+            if (lblHourAlarm != null)
+                lblHourAlarm.ForeColor = foreground;
+
+            if (lblMinuteAlarm != null)
+                lblMinuteAlarm.ForeColor = foreground;
+
+            if (lblSecondAlarm != null)
+                lblSecondAlarm.ForeColor = foreground;
+
+
+            // =============================================================
+            // ALARM NUMERIC UP/DOWN
+            // =============================================================
+
+            if (hourPickerAlarm != null)
+            {
+                hourPickerAlarm.BackColor = numericBackground;
+                hourPickerAlarm.ForeColor = numericForeground;
+            }
+
+            if (minutePickerAlarm != null)
+            {
+                minutePickerAlarm.BackColor = numericBackground;
+                minutePickerAlarm.ForeColor = numericForeground;
+            }
+
+            if (secondPickerAlarm != null)
+            {
+                secondPickerAlarm.BackColor = numericBackground;
+                secondPickerAlarm.ForeColor = numericForeground;
+            }
+
+
+            // =============================================================
+            // ALARM SETTINGS GROUP
+            // =============================================================
+
+            if (alarmSettingsGroupBox != null)
+            {
+                alarmSettingsGroupBox.BackColor = panelBackground;
+                alarmSettingsGroupBox.ForeColor = foreground;
+            }
+
+
+            // =============================================================
+            // ALARM BUTTONS
+            // =============================================================
 
             if (btnSetAlarm != null)
             {
@@ -1022,11 +1448,25 @@ namespace DevDashboard.Control
                 btnSetAlarm.ForeColor = buttonForeground;
             }
 
-            if (btnCancelAlarm != null)
+            if (btnPauselAlarm != null)
             {
-                btnCancelAlarm.BackColor = buttonBackground;
-                btnCancelAlarm.ForeColor = buttonForeground;
+                btnPauselAlarm.BackColor = buttonBackground;
+                btnPauselAlarm.ForeColor = buttonForeground;
             }
+
+            if (btnResetAlarm != null)
+            {
+                btnResetAlarm.BackColor = buttonBackground;
+                btnResetAlarm.ForeColor = buttonForeground;
+            }
+
+
+            // =============================================================
+            // FORCE REDRAW
+            // =============================================================
+
+            Invalidate();
+            Update();
         }
 
         private void ConfigureCard(Panel card)

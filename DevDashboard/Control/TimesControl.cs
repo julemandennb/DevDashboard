@@ -6,17 +6,22 @@ using System.Runtime;
 using System.Windows.Forms;
 using Timers;
 using Timers.Dto;
+using Timers.Interface;
 
 namespace DevDashboard.Control
 {
     public partial class TimesControl : UserControl
     {
-        private readonly Pomodoro _pomodoro;
+        private readonly IPomodoro _pomodoro;
         private readonly System.Windows.Forms.Timer _timerPomodoro;
         private PomodoroSettings _pomodoroSetting;
 
-        private StopWatch _StopWatch;
+        private IStopWatch _StopWatch;
         private readonly System.Windows.Forms.Timer _timerStopWatch;
+
+        private readonly IAlarm _alarm;
+        private readonly System.Windows.Forms.Timer _timerAlarm;
+        private AlarmSettings _AlarmSettings;
 
 
         public TimesControl()
@@ -42,13 +47,32 @@ namespace DevDashboard.Control
                 _timerPomodoro.Tick += Timer_Tick_Pomodoro;
             #endregion
 
+            #region StopWatch
             _StopWatch = new StopWatch();
             _timerStopWatch = new System.Windows.Forms.Timer
             {
                 Interval = 1000
             };
             _timerStopWatch.Tick += Timer_Tick_StopWatch;
+            #endregion
 
+            #region Alarm
+            _AlarmSettings = new AlarmSettings
+            {
+                Hour = 0,
+                Minute = 0,
+                Second = 0,
+            };
+
+            _alarm = new Alarm(_AlarmSettings, UserDataService.Sounds);
+
+            _timerAlarm = new System.Windows.Forms.Timer
+            {
+                Interval = 1000
+            };
+
+            _timerAlarm.Tick += Timer_Tick_Alarm;
+            #endregion
 
             UpdateUi();
         }
@@ -59,6 +83,10 @@ namespace DevDashboard.Control
             this.UpdateUiPomodoroSetting();
 
             this.UpdateUiStopWatch();
+
+            this.UpdateUiAlarmSetting();
+            this.UpdateUiAlarm();
+
         }
 
         #region Pomodoro
@@ -146,6 +174,7 @@ namespace DevDashboard.Control
 
         #endregion
 
+        #region StopWatch
         private void btnStartStopWatch_Click(object? sender, EventArgs e)
         {
             _StopWatch.Start();
@@ -196,5 +225,91 @@ namespace DevDashboard.Control
                 _StopWatch.IsRunning;
 
         }
+        #endregion
+
+        #region Alarm
+
+        private void btnSetAlarm_Click(object? sender, EventArgs e)
+        {
+
+            alarmSettingsGroupBox.Hide();
+            UpdateAlarmSetting();
+            showTimeAlarm.Show();
+
+            _alarm.Start();
+
+            _timerAlarm.Start();
+
+            UpdateUi();
+        }
+
+        private void btnPauselAlarm_Click(object? sender, EventArgs e)
+        {
+            _alarm.Pause();
+
+            _timerAlarm.Stop();
+
+            UpdateUi();
+        }
+
+        private void btnResetAlarm_Click(object? sender, EventArgs e)
+        {
+            alarmSettingsGroupBox.Show();
+            showTimeAlarm.Hide();
+
+            _alarm.Reset();
+
+            _timerAlarm.Stop();
+
+            UpdateUi();
+        }
+
+        private void Timer_Tick_Alarm(object? sender, EventArgs e)
+        {
+            _alarm.Tick();
+
+            if (!_alarm.IsRunning)
+            {
+                _timerAlarm.Stop();
+            }
+
+            UpdateUiAlarm();
+        }
+
+        private void UpdateUiAlarm()
+        {
+            TimeSpan remaining = _alarm.Remaining;
+
+            showTimeAlarm.Text =
+                $"{(int)remaining.TotalHours:00}:{(int)remaining.Minutes:00}:{remaining.Seconds:00}";
+
+
+            btnSetAlarm.Enabled =
+                !_alarm.IsRunning;
+
+            btnPauselAlarm.Enabled =
+                _alarm.IsRunning;
+
+        }
+
+        private void UpdateUiAlarmSetting()
+        {
+            hourPickerAlarm.Value = _AlarmSettings.Hour;
+            minutePickerAlarm.Value = _AlarmSettings.Minute;
+            secondPickerAlarm.Value = _AlarmSettings.Second;
+        }
+
+        private void UpdateAlarmSetting()
+        {
+            _AlarmSettings.Hour = Convert.ToInt32(hourPickerAlarm.Value);
+            _AlarmSettings.Minute = Convert.ToInt32(minutePickerAlarm.Value);
+            _AlarmSettings.Second = Convert.ToInt32(secondPickerAlarm.Value);
+
+
+            _alarm.SetSettings(_AlarmSettings);
+        }
+
+
+        #endregion
     }
 }
