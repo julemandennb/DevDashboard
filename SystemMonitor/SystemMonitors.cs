@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using SystemMonitor.Dto;
 using SystemMonitor.Interface;
+using SystemMonitor.Setting;
 
 namespace SystemMonitor
 {
@@ -14,8 +15,15 @@ namespace SystemMonitor
     /// </summary>
     public class SystemMonitors: ISystemMonitors
     {
-        public SystemMonitors() {
+        /// <summary>
+        /// The settings for the system monitor, which can be used to configure
+        /// </summary>
+        private SystemMonitorOptions _systemMonitorSetting;
 
+        public SystemMonitors(
+            SystemMonitorOptions systemMonitorSetting = null
+            ) {
+            _systemMonitorSetting = systemMonitorSetting ?? new SystemMonitorOptions();
         }
 
         /// <summary> 
@@ -78,19 +86,36 @@ namespace SystemMonitor
         /// A task containing a list of system monitors, including CPU, RAM, 
         /// disk drive, and internet monitors. 
         /// </returns>
-        public async Task<List<ISystemMonitors>> GetAll()
+        public Task<List<ISystemMonitors>> GetAll()
         {
-            return await Task.Run(() =>
+            var monitors = new List<ISystemMonitors>();
+
+            if (_systemMonitorSetting.CpuMonitor)
             {
-                return new List<ISystemMonitors>
-                {
-                    new CpuMonitor(),
-                    new RamMonitor(),
-                    new DiskDriveMonitor(),
-                    new InternetMonitor(),
-                    new EventLogMonitor(),
-                };
-            });
+                monitors.Add(new CpuMonitor());
+            }
+
+            if (_systemMonitorSetting.RamMonitor)
+            {
+                monitors.Add(new RamMonitor());
+            }
+
+            if (_systemMonitorSetting.DiskMonitor)
+            {
+                monitors.Add(new DiskDriveMonitor());
+            }
+
+            if (_systemMonitorSetting.InternetMonitor)
+            {
+                monitors.Add(new InternetMonitor());
+            }
+
+            if (_systemMonitorSetting.EventLogMonitor)
+            {
+                monitors.Add(new EventLogMonitor());
+            }
+
+            return Task.FromResult(monitors);
         }
     }
 }

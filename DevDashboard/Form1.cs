@@ -18,7 +18,7 @@ namespace DevDashboard
 
         public Form1()
         {
-            //_DashboardControl = new DashboardControl();
+            _DashboardControl = new DashboardControl();
             _TimesControl = new TimesControl();
             _ClipboardControl = new ClipboardControl();
             _LauncherControl = new LauncherControl();
@@ -26,7 +26,7 @@ namespace DevDashboard
             _SettingsControl = new SettingsControl();
 
             InitializeComponent();
-            ShowPage(_TimesControl);
+            ShowPage(_DashboardControl);
         }
 
         private void ShowPage(UserControl page) { 

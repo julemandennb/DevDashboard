@@ -5,5 +5,6 @@
   <Project Path="Audio/Audio.csproj" Id="4e938bf1-f743-4b73-b7f4-9197e3320907" />
   <Project Path="DevDashboard/DevDashboard.csproj" />
   <Project Path="Pomodoro/Timers.csproj" Id="ebe532fd-3ea4-4e04-a52d-3b6a3e2dcd34" />
+  <Project Path="Settings/Settings.csproj" Id="711100a3-4bac-49cb-828a-1d2071fbe635" />
   <Project Path="SystemMonitor/SystemMonitor.csproj" />
 </Solution>

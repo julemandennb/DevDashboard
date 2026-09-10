@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Settings;
+using Settings.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SystemMonitor;
 using SystemMonitor.Dto;
 using SystemMonitor.Interface;
+using SystemMonitor.Setting;
 
 
 namespace DevDashboard.Control
@@ -18,15 +22,31 @@ namespace DevDashboard.Control
     {
         private List<ISystemMonitors> _systems = new List<ISystemMonitors>();
 
+        private readonly SettingsFile<DashboardSetting> _settingsFile;
+
+        private DashboardSetting _dashboardSetting { get; set; }
+
         public DashboardControl()
         {
             InitializeComponent();
+
+            _settingsFile = new SettingsFile<DashboardSetting>();
+            _dashboardSetting = _settingsFile.Load();
+
             SystemMonitorsAdd();
         }
 
         private void SystemMonitorsAdd()
         {
-            SystemMonitors systemmonitors = new SystemMonitors();
+            SystemMonitorOptions systemMonitorSetting = new SystemMonitorOptions()
+            {
+                CpuMonitor = _dashboardSetting.CpuMonitor,
+                RamMonitor = _dashboardSetting.RamMonitor,
+                DiskMonitor = _dashboardSetting.DiskMonitor,
+                InternetMonitor = _dashboardSetting.InternetMonitor,
+                EventLogMonitor = _dashboardSetting.EventLogMonitor
+            };
+            SystemMonitors systemmonitors = new SystemMonitors(systemMonitorSetting);
             _ = Task.Run(async () =>
             {
                 _systems = await systemmonitors.GetAll();
