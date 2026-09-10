@@ -38,9 +38,8 @@ namespace SystemMonitor
         /// </exception>
         public virtual string Get()
         {
-            Debugger.Break();
             throw new NotSupportedException(
-                "Get() must be implemented by a specific system monitor.");
+                   $"{GetType().Name} does not implement Get().");
         }
 
         /// <summary> 
@@ -55,11 +54,10 @@ namespace SystemMonitor
         /// <exception cref="NotSupportedException"> 
         /// Thrown when the method is not implemented by a derived system monitor. 
         /// </exception>
-        public virtual List<Decimal> GetVal()
+        public virtual List<decimal> GetVal()
         {
-            Debugger.Break();
             throw new NotSupportedException(
-                "GetVal() must be implemented by a specific system monitor.");
+                 $"{GetType().Name} does not implement GetVal().");
         }
 
         /// <summary> 
@@ -74,9 +72,8 @@ namespace SystemMonitor
         /// </exception>
         public virtual List<DtoSystemInfo> SystemInfos()
         {
-            Debugger.Break();
             throw new NotSupportedException(
-                "SystemInfos() must be implemented by a specific system monitor.");
+                 $"{GetType().Name} does not implement SystemInfos().");
         }
 
         /// <summary> 
