@@ -16,6 +16,8 @@ namespace Settings.Models
 
         public bool EventLogMonitor { get; set; } = true;
 
+        public int UpdateInterval { get; set; } = 2500;
+
         public DashboardSetting() : base("Dashboard.json")
         {
         }

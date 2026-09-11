@@ -24,7 +24,7 @@ namespace DevDashboard.Control
 
         private readonly SettingsFile<DashboardSetting> _settingsFile;
 
-        private DashboardSetting _dashboardSetting { get; set; }
+        private DashboardSetting _dashboardSetting;
 
         public DashboardControl()
         {
@@ -32,6 +32,8 @@ namespace DevDashboard.Control
 
             _settingsFile = new SettingsFile<DashboardSetting>();
             _dashboardSetting = _settingsFile.Load();
+
+            systemInfoTimer.Interval = _dashboardSetting.UpdateInterval;
 
             SystemMonitorsAdd();
         }

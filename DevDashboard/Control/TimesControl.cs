@@ -1,4 +1,6 @@
-﻿using DevDashboard.Services;
+﻿using Settings;
+using Settings.Models;
+using Settings.Services;
 using System;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
@@ -12,6 +14,12 @@ namespace DevDashboard.Control
 {
     public partial class TimesControl : UserControl
     {
+        private readonly SettingsFile<TimesSetting> _settingsFile;
+
+        private TimesSetting _timesSetting;
+
+
+
         private readonly IPomodoro _pomodoro;
         private readonly System.Windows.Forms.Timer _timerPomodoro;
         private PomodoroSettings _pomodoroSetting;
@@ -28,8 +36,12 @@ namespace DevDashboard.Control
         {
             InitializeComponent();
 
+            _settingsFile = new SettingsFile<TimesSetting>();
+            _timesSetting = _settingsFile.Load();
+
+
             #region Pomodoro
-                _pomodoroSetting = new PomodoroSettings
+            _pomodoroSetting = new PomodoroSettings
                 {
                     WorkMinutes = 25,
                     ShortBreakMinutes = 5,
@@ -37,7 +49,9 @@ namespace DevDashboard.Control
                     PomodorosBeforeLongBreak = 4
                 };
 
-                _pomodoro = new Pomodoro(_pomodoroSetting, UserDataService.Sounds);
+                string pomodoroSound = FilePathServices.GetSoundsFilePath(_timesSetting.PomodoroSoundName);
+
+                _pomodoro = new Pomodoro(_pomodoroSetting, pomodoroSound);
 
                 _timerPomodoro = new System.Windows.Forms.Timer
                 {
@@ -64,7 +78,9 @@ namespace DevDashboard.Control
                 Second = 0,
             };
 
-            _alarm = new Alarm(_AlarmSettings, UserDataService.Sounds);
+            string alarmSound = FilePathServices.GetSoundsFilePath(_timesSetting.AlarmSoundName);
+
+            _alarm = new Alarm(_AlarmSettings, alarmSound);
 
             _timerAlarm = new System.Windows.Forms.Timer
             {
