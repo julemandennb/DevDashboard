@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Settings;
+using Settings.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,9 @@ namespace DevDashboard.Control
 {
     public partial class SettingsControl : UserControl
     {
+
+        private List<Setting> _settings = new List<Setting>();
+
         public SettingsControl()
         {
             InitializeComponent();
@@ -29,8 +34,26 @@ namespace DevDashboard.Control
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+
+            DashboardSetting dashboardSetting = AddToList<DashboardSetting>(GetSettingsFile<DashboardSetting>().Load());
+
+            numRefreshInterval.Value = dashboardSetting.UpdateInterval;
+            chkSystemCpu.Checked = dashboardSetting.CpuMonitor;
+            chkSystemRam.Checked = dashboardSetting.RamMonitor;
+            chkSystemDiskUsage.Checked = dashboardSetting.DiskMonitor;
+            chkSystemNetwork.Checked = dashboardSetting.InternetMonitor;
+            chkSystemNotifications.Checked = dashboardSetting.EventLogMonitor;
+
+
             ShowPage(dashboardPage);
             SetSelectedTab(btnDashboard);
+        }
+
+        private void btnTimes_Click(object sender, EventArgs e)
+        {
+            AddToList<TimesSetting>(GetSettingsFile<TimesSetting>().Load());
+            ShowPage(timePage);
+            SetSelectedTab(btnTimes);
         }
 
         private void btnClipboard_Click(object sender, EventArgs e)
@@ -44,6 +67,7 @@ namespace DevDashboard.Control
             generalPage.Visible = false;
             appearancePage.Visible = false;
             dashboardPage.Visible = false;
+            timePage.Visible = false;
             clipboardPage.Visible = false;
 
             page.Visible = true;
@@ -57,6 +81,7 @@ namespace DevDashboard.Control
                 btnGeneral,
                 btnAppearance,
                 btnDashboard,
+                btnTimes,
                 btnClipboard
             };
 
@@ -83,12 +108,7 @@ namespace DevDashboard.Control
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            chkDarkMode.Checked = true;
-            chkStartWithWindows.Checked = false;
-            chkStartMinimized.Checked = false;
-            chkSystemNotifications.Checked = true;
-            chkClipboardEnabled.Checked = true;
-            numRefreshInterval.Value = 2500;
+            // Reset settings to default here
         }
 
         private void chkDarkMode_CheckedChanged(
@@ -96,6 +116,37 @@ namespace DevDashboard.Control
             EventArgs e)
         {
             // Apply global theme here
+        }
+
+
+        private SettingsFile<T> GetSettingsFile<T>()
+        where T : Setting, new()
+        {
+            return new SettingsFile<T>();
+        }
+
+        private T AddToList<T>(T setting) where T : Setting
+        {
+            Setting? existing = _settings.Find(x => x.GetType() == typeof(T));
+
+            if (existing != null)
+            {
+                return (T)existing;
+            }
+
+            _settings.Add(setting);
+            return setting;
+        }
+
+        private T? GetSetting<T>() where T : Setting
+        {
+            return _settings.OfType<T>().FirstOrDefault();
+        }
+
+        private void SaveSetting<T>(T setting)
+            where T : Setting, new()
+        {
+            GetSettingsFile<T>().Save(setting);
         }
     }
 }
