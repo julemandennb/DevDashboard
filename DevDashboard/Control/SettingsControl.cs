@@ -15,10 +15,11 @@ namespace DevDashboard.Control
     public partial class SettingsControl : UserControl
     {
 
-        private Setting IsOn = null;
+        private Setting isOn = null;
 
-        public SettingsControl()
+        public SettingsControl(bool darkModeOn)
         {
+            darkMode = darkModeOn;
             InitializeComponent();
         }
 
@@ -38,7 +39,7 @@ namespace DevDashboard.Control
         {
 
             DashboardSetting dashboardSetting = SettingLibHelp.AddToList<DashboardSetting>(SettingLibHelp.GetSettingsFile<DashboardSetting>().Load());
-            IsOn = dashboardSetting;
+            isOn = dashboardSetting;
             numRefreshInterval.Value = dashboardSetting.UpdateInterval;
             chkSystemCpu.Checked = dashboardSetting.CpuMonitor;
             chkSystemRam.Checked = dashboardSetting.RamMonitor;
@@ -53,7 +54,7 @@ namespace DevDashboard.Control
 
         private void btnTimes_Click(object sender, EventArgs e)
         {
-            IsOn = SettingLibHelp.AddToList<TimesSetting>(SettingLibHelp.GetSettingsFile<TimesSetting>().Load());
+            isOn = SettingLibHelp.AddToList<TimesSetting>(SettingLibHelp.GetSettingsFile<TimesSetting>().Load());
             ShowPage(timePage);
             SetSelectedTab(btnTimes);
         }
@@ -105,12 +106,39 @@ namespace DevDashboard.Control
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            // Save settings here
+            switch (isOn)
+            {
+                case DashboardSetting dashboardSetting:
+                    saveDashboardSetting(dashboardSetting);
+                    break;
+
+                case TimesSetting timesSetting:
+                    SaveTimesSetting(timesSetting);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            // Reset settings to default here
+            switch (isOn)
+            {
+                case DashboardSetting dashboardSetting:
+                    DashboardSetting restDashboardSetting = new DashboardSetting();
+                    SettingLibHelp.SaveSetting(restDashboardSetting);
+                    break;
+
+                case TimesSetting timesSetting:
+                    FilePathServices.DeleteSoundsFile("PomodoroSound.wav");
+                    FilePathServices.DeleteSoundsFile("AlarmSound.wav");
+                    TimesSetting restTimesSetting = new TimesSetting();
+                    SettingLibHelp.SaveSetting(restTimesSetting);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void chkDarkMode_CheckedChanged(
@@ -120,24 +148,36 @@ namespace DevDashboard.Control
             // Apply global theme here
         }
 
-
-        private void SaveTimesSetting()
+        private void saveDashboardSetting(DashboardSetting dashboardSetting)
         {
-            if (IsOn is TimesSetting timesSetting)
-            {
+            dashboardSetting.UpdateInterval = Convert.ToInt32(numRefreshInterval.Value);
+            dashboardSetting.CpuMonitor = chkSystemCpu.Checked;
+            dashboardSetting.RamMonitor = chkSystemRam.Checked;
+            dashboardSetting.DiskMonitor = chkSystemDiskUsage.Checked;
+            dashboardSetting.InternetMonitor = chkSystemNetwork.Checked;
+            dashboardSetting.EventLogMonitor = chkSystemNotifications.Checked;
+
+            SettingLibHelp.SaveSetting(dashboardSetting);
+        }
+
+        private void SaveTimesSetting(TimesSetting timesSetting)
+        {
+           
                 if (!string.IsNullOrEmpty(txtPomodoroSoundPath.Text))
                 {
-                    FilePathServices.SaveSoundsFilePath(txtPomodoroSoundPath.Text, "PomodoroSound.wav");
+                   FilePathServices.SaveSoundsFilePath(txtPomodoroSoundPath.Text, "PomodoroSound.wav");
+
                     timesSetting.PomodoroSoundName = "PomodoroSound.wav";
                 }
                 if (!string.IsNullOrEmpty(txtAlarmSoundPath.Text))
                 {
+
                     FilePathServices.SaveSoundsFilePath(txtAlarmSoundPath.Text, "AlarmSound.wav");
+
                     timesSetting.AlarmSoundName = "AlarmSound.wav";
                 }
 
                 SettingLibHelp.SaveSetting(timesSetting);
-            }
         }
     }
 }

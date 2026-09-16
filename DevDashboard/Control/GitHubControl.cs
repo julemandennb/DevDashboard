@@ -10,7 +10,7 @@ namespace DevDashboard.Control
 {
     public partial class GitHubControl : UserControl
     {
-        public GitHubControl()
+        public GitHubControl(bool darkModeOn)
         {
             InitializeComponent();
         }

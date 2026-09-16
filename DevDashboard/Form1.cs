@@ -1,4 +1,7 @@
 using DevDashboard.Control;
+using DevDashboard.Help;
+using Settings.Models;
+using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using SystemMonitor;
 using SystemMonitor.Dto;
@@ -18,12 +21,14 @@ namespace DevDashboard
 
         public Form1()
         {
-            _DashboardControl = new DashboardControl();
-            _TimesControl = new TimesControl();
-            _ClipboardControl = new ClipboardControl();
-            _LauncherControl = new LauncherControl();
-            _GitHubControl = new GitHubControl();
-            _SettingsControl = new SettingsControl();
+
+            darkMode = true;
+            _DashboardControl = new DashboardControl(darkMode);
+            _TimesControl = new TimesControl(darkMode);
+            _ClipboardControl = new ClipboardControl(darkMode);
+            _LauncherControl = new LauncherControl(darkMode);
+            _GitHubControl = new GitHubControl(darkMode);
+            _SettingsControl = new SettingsControl(darkMode);
 
             InitializeComponent();
             ShowPage(_DashboardControl);

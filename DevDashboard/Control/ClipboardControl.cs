@@ -10,7 +10,7 @@ namespace DevDashboard.Control
 {
     public partial class ClipboardControl : UserControl
     {
-        public ClipboardControl()
+        public ClipboardControl(bool darkModeOn)
         {
             InitializeComponent();
         }

@@ -29,8 +29,9 @@ namespace DevDashboard.Control
         private AlarmSettings _AlarmSettings;
 
 
-        public TimesControl()
+        public TimesControl(bool darkModeOn)
         {
+            darkMode = darkModeOn;
             InitializeComponent();
 
             _timesSetting = SettingLibHelp.GetSettingsFile<TimesSetting>().Load();

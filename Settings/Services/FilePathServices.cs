@@ -16,10 +16,23 @@ namespace Settings.Services
 
         public static bool SaveSoundsFilePath(string sourceFile, string name)
         {
-            return FileServices.AddFile(
+
+            string fileType = Path.GetExtension(sourceFile).ToLower();
+
+            if (fileType == ".wav")
+                return FileServices.AddFile(
                 sourceFile,
                 PathServices.Sounds,
                 name);
+            else if (fileType == ".mp3")
+                return ConvertFile.ConvertMp3ToWavSoundsFile(sourceFile, name);
+            else
+                return false;
+        }
+
+        public static bool DeleteSoundsFile(string name)
+        {
+           return FileServices.DeleteFile(PathServices.Sounds, name);
         }
     }
 }

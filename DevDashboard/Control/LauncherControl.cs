@@ -10,7 +10,7 @@ namespace DevDashboard.Control
 {
     public partial class LauncherControl : UserControl
     {
-        public LauncherControl()
+        public LauncherControl(bool darkModeOn)
         {
             InitializeComponent();
         }

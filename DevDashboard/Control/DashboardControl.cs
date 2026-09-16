@@ -25,8 +25,9 @@ namespace DevDashboard.Control
 
         private DashboardSetting _dashboardSetting;
 
-        public DashboardControl()
+        public DashboardControl(bool darkModeOn)
         {
+            darkMode = darkModeOn;
             InitializeComponent();
 
             _dashboardSetting = SettingLibHelp.GetSettingsFile<DashboardSetting>().Load();

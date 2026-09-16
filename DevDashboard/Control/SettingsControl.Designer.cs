@@ -2,6 +2,38 @@
 {
     partial class SettingsControl
     {
+        // =========================================================
+        // THEME
+        // =========================================================
+
+        private bool darkMode = true;
+
+        public bool DarkMode
+        {
+            get => darkMode;
+            set
+            {
+                if (darkMode == value)
+                    return;
+
+                darkMode = value;
+
+                if (chkDarkMode != null &&
+                    chkDarkMode.Checked != value)
+                {
+                    chkDarkMode.Checked = value;
+                }
+
+                ApplyTheme();
+            }
+        }
+
+        private Color DarkColor =
+            Color.FromArgb(18, 18, 18);
+
+        private Color LightColor =
+            Color.FromArgb(240, 240, 240);
+
         private System.ComponentModel.IContainer components = null;
 
         // =========================================================
@@ -20,7 +52,6 @@
         private Button btnAppearance;
         private Button btnDashboard;
         private Button btnTimes;
-
         private Button btnClipboard;
 
         // =========================================================
@@ -83,7 +114,7 @@
         private CheckBox chkSystemNetwork;
 
         // =========================================================
-        // Times
+        // TIMES
         // =========================================================
 
         private Panel timePage;
@@ -99,14 +130,11 @@
         private TextBox txtPomodoroSoundPath;
         private Button btnBrowsePomodoroSound;
 
-
         private Panel AlarmSoundCard;
         private Label lblAlarmSoundTitle;
         private Label lblAlarmSoundDescription;
         private TextBox txtAlarmSoundPath;
         private Button btnBrowseAlarmSound;
-
-
 
         // =========================================================
         // CLIPBOARD
@@ -212,8 +240,7 @@
             chkSystemDiskUsage = new CheckBox();
             chkSystemNetwork = new CheckBox();
 
-            //Times
-
+            // Times
             timePage = new Panel();
 
             lblTimeTitle = new Label();
@@ -232,7 +259,6 @@
             lblAlarmSoundDescription = new Label();
             txtAlarmSoundPath = new TextBox();
             btnBrowseAlarmSound = new Button();
-
 
             // Clipboard
             clipboardPage = new Panel();
@@ -260,7 +286,9 @@
                 DockStyle.Fill;
 
             settingsPanel.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             settingsPanel.Padding =
                 new Padding(0);
@@ -276,7 +304,9 @@
                 55;
 
             tabPanel.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             // =====================================================
             // TABS
@@ -298,9 +328,9 @@
                 2);
 
             ConfigureTabButton(
-               btnTimes,
-               "Times",
-               3);
+                btnTimes,
+                "Times",
+                3);
 
             ConfigureTabButton(
                 btnClipboard,
@@ -314,7 +344,7 @@
                 btnDashboard);
 
             tabPanel.Controls.Add(
-             btnTimes);
+                btnTimes);
 
             tabPanel.Controls.Add(
                 btnAppearance);
@@ -330,7 +360,9 @@
                 DockStyle.Fill;
 
             contentPanel.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             contentPanel.Padding =
                 new Padding(0, 20, 0, 0);
@@ -343,7 +375,9 @@
                 DockStyle.Fill;
 
             generalPage.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             // Title
             lblGeneralTitle.AutoSize =
@@ -359,7 +393,9 @@
                     FontStyle.Bold);
 
             lblGeneralTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblGeneralTitle.Location =
                 new Point(0, 0);
@@ -377,7 +413,9 @@
                     10F);
 
             lblGeneralDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblGeneralDescription.Location =
                 new Point(0, 38);
@@ -409,7 +447,9 @@
                     FontStyle.Bold);
 
             lblStartupTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblStartupTitle.Location =
                 new Point(20, 15);
@@ -427,7 +467,9 @@
                     9F);
 
             lblStartupDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblStartupDescription.Location =
                 new Point(20, 42);
@@ -481,7 +523,9 @@
                 DockStyle.Fill;
 
             appearancePage.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             // Title
             lblAppearanceTitle.AutoSize =
@@ -497,7 +541,9 @@
                     FontStyle.Bold);
 
             lblAppearanceTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblAppearanceTitle.Location =
                 new Point(0, 0);
@@ -515,7 +561,9 @@
                     10F);
 
             lblAppearanceDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblAppearanceDescription.Location =
                 new Point(0, 38);
@@ -546,7 +594,9 @@
                     FontStyle.Bold);
 
             lblThemeTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblThemeTitle.Location =
                 new Point(20, 15);
@@ -563,7 +613,9 @@
                     9F);
 
             lblThemeDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblThemeDescription.Location =
                 new Point(20, 42);
@@ -578,7 +630,7 @@
                 new Point(20, 75);
 
             chkDarkMode.Checked =
-                true;
+                DarkMode;
 
             themeCard.Controls.Add(
                 chkDarkMode);
@@ -606,7 +658,9 @@
                 DockStyle.Fill;
 
             dashboardPage.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             // Title
             lblDashboardTitle.AutoSize =
@@ -622,7 +676,9 @@
                     FontStyle.Bold);
 
             lblDashboardTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblDashboardTitle.Location =
                 new Point(0, 0);
@@ -640,7 +696,9 @@
                     10F);
 
             lblDashboardDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblDashboardDescription.Location =
                 new Point(0, 38);
@@ -675,7 +733,9 @@
                     FontStyle.Bold);
 
             lblRefreshTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblRefreshTitle.Location =
                 new Point(20, 15);
@@ -696,7 +756,9 @@
                     9F);
 
             lblRefreshDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblRefreshDescription.Location =
                 new Point(20, 42);
@@ -724,10 +786,14 @@
                 new Point(20, 72);
 
             numRefreshInterval.BackColor =
-                Color.FromArgb(35, 35, 38);
+                DarkMode
+                    ? Color.FromArgb(35, 35, 38)
+                    : Color.White;
 
             numRefreshInterval.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             // -----------------------------------------------------
             // MILLISECONDS LABEL
@@ -745,7 +811,9 @@
                     9F);
 
             lblRefreshMs.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblRefreshMs.Location =
                 new Point(150, 77);
@@ -766,59 +834,42 @@
             systemChkPanelHold.Dock =
                 DockStyle.None;
 
-            // -----------------------------------------------------
             // CPU
-            // -----------------------------------------------------
-
             ConfigureCheckBox(
                 chkSystemCpu);
 
             chkSystemCpu.Text =
                 "Show system CPU";
 
-            // -----------------------------------------------------
             // RAM
-            // -----------------------------------------------------
-
             ConfigureCheckBox(
                 chkSystemRam);
 
             chkSystemRam.Text =
                 "Show system RAM";
 
-            // -----------------------------------------------------
             // DISK
-            // -----------------------------------------------------
-
             ConfigureCheckBox(
                 chkSystemDiskUsage);
 
             chkSystemDiskUsage.Text =
                 "Show disk usage";
 
-            // -----------------------------------------------------
             // NETWORK
-            // -----------------------------------------------------
-
             ConfigureCheckBox(
                 chkSystemNetwork);
 
             chkSystemNetwork.Text =
                 "Show network";
 
-            // -----------------------------------------------------
             // NOTIFICATIONS
-            // -----------------------------------------------------
-
             ConfigureCheckBox(
                 chkSystemNotifications);
 
             chkSystemNotifications.Text =
                 "Show notifications";
 
-            // -----------------------------------------------------
             // ADD CHECKBOXES
-            // -----------------------------------------------------
 
             systemChkPanelHold.Controls.Add(
                 chkSystemCpu,
@@ -845,9 +896,7 @@
                 0,
                 2);
 
-            // -----------------------------------------------------
             // ADD DASHBOARD CONTROLS
-            // -----------------------------------------------------
 
             dashboardCard.Controls.Add(
                 systemChkPanelHold);
@@ -874,6 +923,323 @@
                 lblDashboardTitle);
 
             // =====================================================
+            // TIMES PAGE
+            // =====================================================
+
+            timePage.Dock =
+                DockStyle.Fill;
+
+            timePage.BackColor =
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
+
+            // Title
+
+            lblTimeTitle.AutoSize =
+                true;
+
+            lblTimeTitle.Text =
+                "Times";
+
+            lblTimeTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    18F,
+                    FontStyle.Bold);
+
+            lblTimeTitle.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            lblTimeTitle.Location =
+                new Point(0, 0);
+
+            // Description
+
+            lblTimeDescription.AutoSize =
+                true;
+
+            lblTimeDescription.Text =
+                "Configure sounds used by the Pomodoro timer and alarms.";
+
+            lblTimeDescription.Font =
+                new Font(
+                    "Segoe UI",
+                    10F);
+
+            lblTimeDescription.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
+
+            lblTimeDescription.Location =
+                new Point(0, 38);
+
+            // =====================================================
+            // POMODORO SOUND CARD
+            // =====================================================
+
+            ConfigureSettingsCard(
+                PomodoroSoundCard);
+
+            PomodoroSoundCard.Location =
+                new Point(0, 85);
+
+            PomodoroSoundCard.Size =
+                new Size(600, 145);
+
+            lblPomodoroSoundTitle.AutoSize =
+                true;
+
+            lblPomodoroSoundTitle.Text =
+                "Pomodoro Sound";
+
+            lblPomodoroSoundTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    12F,
+                    FontStyle.Bold);
+
+            lblPomodoroSoundTitle.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            lblPomodoroSoundTitle.Location =
+                new Point(20, 15);
+
+            lblPomodoroSoundDescription.AutoSize =
+                true;
+
+            lblPomodoroSoundDescription.Text =
+                "Select a WAV or MP3 file to play when a Pomodoro timer ends.";
+
+            lblPomodoroSoundDescription.Font =
+                new Font(
+                    "Segoe UI",
+                    9F);
+
+            lblPomodoroSoundDescription.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
+
+            lblPomodoroSoundDescription.Location =
+                new Point(20, 42);
+
+            txtPomodoroSoundPath.Location =
+                new Point(20, 75);
+
+            txtPomodoroSoundPath.Size =
+                new Size(430, 27);
+
+            txtPomodoroSoundPath.BackColor =
+                DarkMode
+                    ? Color.FromArgb(35, 35, 38)
+                    : Color.White;
+
+            txtPomodoroSoundPath.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            txtPomodoroSoundPath.BorderStyle =
+                BorderStyle.FixedSingle;
+
+            txtPomodoroSoundPath.ReadOnly =
+                true;
+
+            btnBrowsePomodoroSound.Text =
+                "Browse...";
+
+            btnBrowsePomodoroSound.Font =
+                new Font(
+                    "Segoe UI",
+                    9F);
+
+            btnBrowsePomodoroSound.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            btnBrowsePomodoroSound.BackColor =
+                DarkMode
+                    ? Color.FromArgb(45, 45, 48)
+                    : Color.FromArgb(220, 220, 220);
+
+            btnBrowsePomodoroSound.FlatStyle =
+                FlatStyle.Flat;
+
+            btnBrowsePomodoroSound.FlatAppearance.BorderSize =
+                0;
+
+            btnBrowsePomodoroSound.Size =
+                new Size(110, 30);
+
+            btnBrowsePomodoroSound.Location =
+                new Point(460, 73);
+
+            btnBrowsePomodoroSound.Cursor =
+                Cursors.Hand;
+
+            btnBrowsePomodoroSound.UseVisualStyleBackColor =
+                false;
+
+            btnBrowsePomodoroSound.Click +=
+                btnBrowsePomodoroSound_Click;
+
+            PomodoroSoundCard.Controls.Add(
+                btnBrowsePomodoroSound);
+
+            PomodoroSoundCard.Controls.Add(
+                txtPomodoroSoundPath);
+
+            PomodoroSoundCard.Controls.Add(
+                lblPomodoroSoundDescription);
+
+            PomodoroSoundCard.Controls.Add(
+                lblPomodoroSoundTitle);
+
+            // =====================================================
+            // ALARM SOUND CARD
+            // =====================================================
+
+            ConfigureSettingsCard(
+                AlarmSoundCard);
+
+            AlarmSoundCard.Location =
+                new Point(0, 245);
+
+            AlarmSoundCard.Size =
+                new Size(600, 145);
+
+            lblAlarmSoundTitle.AutoSize =
+                true;
+
+            lblAlarmSoundTitle.Text =
+                "Alarm Sound";
+
+            lblAlarmSoundTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    12F,
+                    FontStyle.Bold);
+
+            lblAlarmSoundTitle.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            lblAlarmSoundTitle.Location =
+                new Point(20, 15);
+
+            lblAlarmSoundDescription.AutoSize =
+                true;
+
+            lblAlarmSoundDescription.Text =
+                "Select a WAV or MP3 file to play when an alarm goes off.";
+
+            lblAlarmSoundDescription.Font =
+                new Font(
+                    "Segoe UI",
+                    9F);
+
+            lblAlarmSoundDescription.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
+
+            lblAlarmSoundDescription.Location =
+                new Point(20, 42);
+
+            txtAlarmSoundPath.Location =
+                new Point(20, 75);
+
+            txtAlarmSoundPath.Size =
+                new Size(430, 27);
+
+            txtAlarmSoundPath.BackColor =
+                DarkMode
+                    ? Color.FromArgb(35, 35, 38)
+                    : Color.White;
+
+            txtAlarmSoundPath.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            txtAlarmSoundPath.BorderStyle =
+                BorderStyle.FixedSingle;
+
+            txtAlarmSoundPath.ReadOnly =
+                true;
+
+            btnBrowseAlarmSound.Text =
+                "Browse...";
+
+            btnBrowseAlarmSound.Font =
+                new Font(
+                    "Segoe UI",
+                    9F);
+
+            btnBrowseAlarmSound.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
+
+            btnBrowseAlarmSound.BackColor =
+                DarkMode
+                    ? Color.FromArgb(45, 45, 48)
+                    : Color.FromArgb(220, 220, 220);
+
+            btnBrowseAlarmSound.FlatStyle =
+                FlatStyle.Flat;
+
+            btnBrowseAlarmSound.FlatAppearance.BorderSize =
+                0;
+
+            btnBrowseAlarmSound.Size =
+                new Size(110, 30);
+
+            btnBrowseAlarmSound.Location =
+                new Point(460, 73);
+
+            btnBrowseAlarmSound.Cursor =
+                Cursors.Hand;
+
+            btnBrowseAlarmSound.UseVisualStyleBackColor =
+                false;
+
+            btnBrowseAlarmSound.Click +=
+                btnBrowseAlarmSound_Click;
+
+            AlarmSoundCard.Controls.Add(
+                btnBrowseAlarmSound);
+
+            AlarmSoundCard.Controls.Add(
+                txtAlarmSoundPath);
+
+            AlarmSoundCard.Controls.Add(
+                lblAlarmSoundDescription);
+
+            AlarmSoundCard.Controls.Add(
+                lblAlarmSoundTitle);
+
+            timePage.Controls.Add(
+                AlarmSoundCard);
+
+            timePage.Controls.Add(
+                PomodoroSoundCard);
+
+            timePage.Controls.Add(
+                lblTimeDescription);
+
+            timePage.Controls.Add(
+                lblTimeTitle);
+
+            // =====================================================
             // CLIPBOARD PAGE
             // =====================================================
 
@@ -881,9 +1247,10 @@
                 DockStyle.Fill;
 
             clipboardPage.BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
-            // Title
             lblClipboardTitle.AutoSize =
                 true;
 
@@ -897,12 +1264,13 @@
                     FontStyle.Bold);
 
             lblClipboardTitle.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblClipboardTitle.Location =
                 new Point(0, 0);
 
-            // Description
             lblClipboardDescription.AutoSize =
                 true;
 
@@ -915,139 +1283,12 @@
                     10F);
 
             lblClipboardDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblClipboardDescription.Location =
                 new Point(0, 38);
-
-            // =====================================================
-            // TIMES PAGE
-            // =====================================================
-
-            timePage.Dock = DockStyle.Fill;
-            timePage.BackColor = Color.FromArgb(18, 18, 18);
-
-            // Title
-            lblTimeTitle.AutoSize = true;
-            lblTimeTitle.Text = "Times";
-            lblTimeTitle.Font = new Font(
-                "Segoe UI",
-                18F,
-                FontStyle.Bold);
-            lblTimeTitle.ForeColor = Color.White;
-            lblTimeTitle.Location = new Point(0, 0);
-
-            // Description
-            lblTimeDescription.AutoSize = true;
-            lblTimeDescription.Text = "Configure sounds used by the Pomodoro timer and alarms.";
-            lblTimeDescription.Font = new Font(
-                "Segoe UI",
-                10F);
-            lblTimeDescription.ForeColor = Color.Gainsboro;
-            lblTimeDescription.Location = new Point(0, 38);
-
-            // =====================================================
-            // POMODORO SOUND CARD
-            // =====================================================
-
-            ConfigureSettingsCard(PomodoroSoundCard);
-
-            PomodoroSoundCard.Location = new Point(0, 85);
-            PomodoroSoundCard.Size = new Size(600, 145);
-
-            lblPomodoroSoundTitle.AutoSize = true;
-            lblPomodoroSoundTitle.Text = "Pomodoro Sound";
-            lblPomodoroSoundTitle.Font = new Font(
-                "Segoe UI",
-                12F,
-                FontStyle.Bold);
-            lblPomodoroSoundTitle.ForeColor = Color.White;
-            lblPomodoroSoundTitle.Location = new Point(20, 15);
-
-            lblPomodoroSoundDescription.AutoSize = true;
-            lblPomodoroSoundDescription.Text = "Select a WAV or MP3 file to play when a Pomodoro timer ends.";
-            lblPomodoroSoundDescription.Font = new Font(
-                "Segoe UI",
-                9F);
-            lblPomodoroSoundDescription.ForeColor = Color.Gainsboro;
-            lblPomodoroSoundDescription.Location = new Point(20, 42);
-
-            txtPomodoroSoundPath.Location = new Point(20, 75);
-            txtPomodoroSoundPath.Size = new Size(430, 27);
-            txtPomodoroSoundPath.BackColor = Color.FromArgb(35, 35, 38);
-            txtPomodoroSoundPath.ForeColor = Color.White;
-            txtPomodoroSoundPath.BorderStyle = BorderStyle.FixedSingle;
-            txtPomodoroSoundPath.ReadOnly = true;
-
-            btnBrowsePomodoroSound.Text = "Browse...";
-            btnBrowsePomodoroSound.Font = new Font("Segoe UI", 9F);
-            btnBrowsePomodoroSound.ForeColor = Color.Gainsboro;
-            btnBrowsePomodoroSound.BackColor = Color.FromArgb(45, 45, 48);
-            btnBrowsePomodoroSound.FlatStyle = FlatStyle.Flat;
-            btnBrowsePomodoroSound.FlatAppearance.BorderSize = 0;
-            btnBrowsePomodoroSound.Size = new Size(110, 30);
-            btnBrowsePomodoroSound.Location = new Point(460, 73);
-            btnBrowsePomodoroSound.Cursor = Cursors.Hand;
-            btnBrowsePomodoroSound.Click += btnBrowsePomodoroSound_Click;
-
-            PomodoroSoundCard.Controls.Add(btnBrowsePomodoroSound);
-            PomodoroSoundCard.Controls.Add(txtPomodoroSoundPath);
-            PomodoroSoundCard.Controls.Add(lblPomodoroSoundDescription);
-            PomodoroSoundCard.Controls.Add(lblPomodoroSoundTitle);
-
-            // =====================================================
-            // ALARM SOUND CARD
-            // =====================================================
-
-            ConfigureSettingsCard(AlarmSoundCard);
-
-            AlarmSoundCard.Location = new Point(0, 245);
-            AlarmSoundCard.Size = new Size(600, 145);
-
-            lblAlarmSoundTitle.AutoSize = true;
-            lblAlarmSoundTitle.Text = "Alarm Sound";
-            lblAlarmSoundTitle.Font = new Font(
-                "Segoe UI",
-                12F,
-                FontStyle.Bold);
-            lblAlarmSoundTitle.ForeColor = Color.White;
-            lblAlarmSoundTitle.Location = new Point(20, 15);
-
-            lblAlarmSoundDescription.AutoSize = true;
-            lblAlarmSoundDescription.Text = "Select a WAV or MP3 file to play when an alarm goes off.";
-            lblAlarmSoundDescription.Font = new Font(
-                "Segoe UI",
-                9F);
-            lblAlarmSoundDescription.ForeColor = Color.Gainsboro;
-            lblAlarmSoundDescription.Location = new Point(20, 42);
-
-            txtAlarmSoundPath.Location = new Point(20, 75);
-            txtAlarmSoundPath.Size = new Size(430, 27);
-            txtAlarmSoundPath.BackColor = Color.FromArgb(35, 35, 38);
-            txtAlarmSoundPath.ForeColor = Color.White;
-            txtAlarmSoundPath.BorderStyle = BorderStyle.FixedSingle;
-            txtAlarmSoundPath.ReadOnly = true;
-
-            btnBrowseAlarmSound.Text = "Browse...";
-            btnBrowseAlarmSound.Font = new Font("Segoe UI", 9F);
-            btnBrowseAlarmSound.ForeColor = Color.Gainsboro;
-            btnBrowseAlarmSound.BackColor = Color.FromArgb(45, 45, 48);
-            btnBrowseAlarmSound.FlatStyle = FlatStyle.Flat;
-            btnBrowseAlarmSound.FlatAppearance.BorderSize = 0;
-            btnBrowseAlarmSound.Size = new Size(110, 30);
-            btnBrowseAlarmSound.Location = new Point(460, 73);
-            btnBrowseAlarmSound.Cursor = Cursors.Hand;
-            btnBrowseAlarmSound.Click += btnBrowseAlarmSound_Click;
-
-            AlarmSoundCard.Controls.Add(btnBrowseAlarmSound);
-            AlarmSoundCard.Controls.Add(txtAlarmSoundPath);
-            AlarmSoundCard.Controls.Add(lblAlarmSoundDescription);
-            AlarmSoundCard.Controls.Add(lblAlarmSoundTitle);
-
-            timePage.Controls.Add(AlarmSoundCard);
-            timePage.Controls.Add(PomodoroSoundCard);
-            timePage.Controls.Add(lblTimeDescription);
-            timePage.Controls.Add(lblTimeTitle);
 
             // =====================================================
             // CLIPBOARD CARD
@@ -1075,7 +1316,9 @@
                     FontStyle.Bold);
 
             lblClipboardMonitoring.ForeColor =
-                Color.White;
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
 
             lblClipboardMonitoring.Location =
                 new Point(20, 15);
@@ -1092,7 +1335,9 @@
                     9F);
 
             lblClipboardMonitoringDescription.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
 
             lblClipboardMonitoringDescription.Location =
                 new Point(20, 42);
@@ -1160,7 +1405,10 @@
                 Color.White;
 
             btnApply.BackColor =
-                Color.FromArgb(45, 45, 48);
+                Color.FromArgb(
+                    45,
+                    45,
+                    48);
 
             btnApply.FlatStyle =
                 FlatStyle.Flat;
@@ -1183,6 +1431,9 @@
             btnApply.Cursor =
                 Cursors.Hand;
 
+            btnApply.UseVisualStyleBackColor =
+                false;
+
             btnApply.Click +=
                 btnApply_Click;
 
@@ -1202,7 +1453,10 @@
                 Color.Gainsboro;
 
             btnReset.BackColor =
-                Color.FromArgb(28, 28, 30);
+                Color.FromArgb(
+                    28,
+                    28,
+                    30);
 
             btnReset.FlatStyle =
                 FlatStyle.Flat;
@@ -1221,6 +1475,9 @@
             btnReset.Anchor =
                 AnchorStyles.Bottom |
                 AnchorStyles.Right;
+
+            btnReset.UseVisualStyleBackColor =
+                false;
 
             // =====================================================
             // MAIN PANEL
@@ -1255,7 +1512,7 @@
                 btnDashboard_Click;
 
             btnTimes.Click +=
-               btnTimes_Click;
+                btnTimes_Click;
 
             btnClipboard.Click +=
                 btnClipboard_Click;
@@ -1299,7 +1556,9 @@
                 AutoScaleMode.Font;
 
             BackColor =
-                Color.FromArgb(18, 18, 18);
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
 
             Dock =
                 DockStyle.Fill;
@@ -1307,10 +1566,457 @@
             Name =
                 "SettingsControl";
 
+            // =====================================================
+            // APPLY INITIAL THEME
+            // =====================================================
+
+            ApplyTheme();
+
             ResumeLayout(false);
         }
 
         #endregion
+
+        // =========================================================
+        // THEME
+        // =========================================================
+
+        private void ApplyTheme()
+        {
+            Color bg = DarkMode
+                ? DarkColor
+                : LightColor;
+
+            Color panelBackground = DarkMode
+                ? Color.FromArgb(28, 28, 30)
+                : Color.FromArgb(225, 225, 225);
+
+            Color cardBackground = DarkMode
+                ? Color.FromArgb(28, 28, 30)
+                : Color.FromArgb(235, 235, 235);
+
+            Color foreground = DarkMode
+                ? Color.Gainsboro
+                : Color.Black;
+
+            Color titleForeground = DarkMode
+                ? Color.White
+                : Color.Black;
+
+            Color secondaryForeground = DarkMode
+                ? Color.Gainsboro
+                : Color.FromArgb(70, 70, 70);
+
+            Color inputBackground = DarkMode
+                ? Color.FromArgb(35, 35, 38)
+                : Color.White;
+
+            Color inputForeground = DarkMode
+                ? Color.White
+                : Color.Black;
+
+            Color buttonBackground = DarkMode
+                ? Color.FromArgb(45, 45, 48)
+                : Color.FromArgb(220, 220, 220);
+
+            Color buttonForeground = DarkMode
+                ? Color.White
+                : Color.Black;
+
+            Color tabBackground = DarkMode
+                ? Color.FromArgb(18, 18, 18)
+                : Color.FromArgb(240, 240, 240);
+
+            Color tabHoverBackground = DarkMode
+                ? Color.FromArgb(28, 28, 30)
+                : Color.FromArgb(220, 220, 220);
+
+            // =====================================================
+            // MAIN
+            // =====================================================
+
+            BackColor = bg;
+
+            if (settingsPanel != null)
+                settingsPanel.BackColor = bg;
+
+            if (tabPanel != null)
+                tabPanel.BackColor = tabBackground;
+
+            if (contentPanel != null)
+                contentPanel.BackColor = bg;
+
+            // =====================================================
+            // PAGES
+            // =====================================================
+
+            if (generalPage != null)
+                generalPage.BackColor = bg;
+
+            if (appearancePage != null)
+                appearancePage.BackColor = bg;
+
+            if (dashboardPage != null)
+                dashboardPage.BackColor = bg;
+
+            if (timePage != null)
+                timePage.BackColor = bg;
+
+            if (clipboardPage != null)
+                clipboardPage.BackColor = bg;
+
+            // =====================================================
+            // TABS
+            // =====================================================
+
+            ApplyTabTheme(
+                btnGeneral,
+                tabBackground,
+                foreground,
+                tabHoverBackground);
+
+            ApplyTabTheme(
+                btnAppearance,
+                tabBackground,
+                foreground,
+                tabHoverBackground);
+
+            ApplyTabTheme(
+                btnDashboard,
+                tabBackground,
+                foreground,
+                tabHoverBackground);
+
+            ApplyTabTheme(
+                btnTimes,
+                tabBackground,
+                foreground,
+                tabHoverBackground);
+
+            ApplyTabTheme(
+                btnClipboard,
+                tabBackground,
+                foreground,
+                tabHoverBackground);
+
+            // =====================================================
+            // GENERAL
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblGeneralTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblGeneralDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblStartupTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblStartupDescription,
+                secondaryForeground);
+
+            if (startupCard != null)
+                startupCard.BackColor = cardBackground;
+
+            ApplyCheckBoxTheme(
+                chkStartWithWindows,
+                foreground);
+
+            ApplyCheckBoxTheme(
+                chkStartMinimized,
+                foreground);
+
+            // =====================================================
+            // APPEARANCE
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblAppearanceTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblAppearanceDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblThemeTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblThemeDescription,
+                secondaryForeground);
+
+            if (themeCard != null)
+                themeCard.BackColor = cardBackground;
+
+            ApplyCheckBoxTheme(
+                chkDarkMode,
+                foreground);
+
+            // =====================================================
+            // DASHBOARD
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblDashboardTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblDashboardDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblRefreshTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblRefreshDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblRefreshMs,
+                secondaryForeground);
+
+            if (dashboardCard != null)
+                dashboardCard.BackColor = cardBackground;
+
+            if (numRefreshInterval != null)
+            {
+                numRefreshInterval.BackColor =
+                    inputBackground;
+
+                numRefreshInterval.ForeColor =
+                    inputForeground;
+            }
+
+            ApplyCheckBoxTheme(
+                chkSystemCpu,
+                foreground);
+
+            ApplyCheckBoxTheme(
+                chkSystemRam,
+                foreground);
+
+            ApplyCheckBoxTheme(
+                chkSystemDiskUsage,
+                foreground);
+
+            ApplyCheckBoxTheme(
+                chkSystemNetwork,
+                foreground);
+
+            ApplyCheckBoxTheme(
+                chkSystemNotifications,
+                foreground);
+
+            if (systemChkPanelHold != null)
+                systemChkPanelHold.BackColor =
+                    Color.Transparent;
+
+            // =====================================================
+            // TIMES
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblTimeTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblTimeDescription,
+                secondaryForeground);
+
+            if (PomodoroSoundCard != null)
+                PomodoroSoundCard.BackColor =
+                    cardBackground;
+
+            if (AlarmSoundCard != null)
+                AlarmSoundCard.BackColor =
+                    cardBackground;
+
+            ApplyLabelTheme(
+                lblPomodoroSoundTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblPomodoroSoundDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblAlarmSoundTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblAlarmSoundDescription,
+                secondaryForeground);
+
+            if (txtPomodoroSoundPath != null)
+            {
+                txtPomodoroSoundPath.BackColor =
+                    inputBackground;
+
+                txtPomodoroSoundPath.ForeColor =
+                    inputForeground;
+            }
+
+            if (txtAlarmSoundPath != null)
+            {
+                txtAlarmSoundPath.BackColor =
+                    inputBackground;
+
+                txtAlarmSoundPath.ForeColor =
+                    inputForeground;
+            }
+
+            ApplyButtonTheme(
+                btnBrowsePomodoroSound,
+                buttonBackground,
+                buttonForeground);
+
+            ApplyButtonTheme(
+                btnBrowseAlarmSound,
+                buttonBackground,
+                buttonForeground);
+
+            // =====================================================
+            // CLIPBOARD
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblClipboardTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblClipboardDescription,
+                secondaryForeground);
+
+            ApplyLabelTheme(
+                lblClipboardMonitoring,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblClipboardMonitoringDescription,
+                secondaryForeground);
+
+            if (clipboardCard != null)
+                clipboardCard.BackColor =
+                    cardBackground;
+
+            ApplyCheckBoxTheme(
+                chkClipboardEnabled,
+                foreground);
+
+            // =====================================================
+            // BUTTONS
+            // =====================================================
+
+            ApplyButtonTheme(
+                btnApply,
+                buttonBackground,
+                buttonForeground);
+
+            ApplyButtonTheme(
+                btnReset,
+                cardBackground,
+                foreground);
+
+            // =====================================================
+            // REDRAW
+            // =====================================================
+
+            Invalidate();
+            Update();
+        }
+
+        // =========================================================
+        // LABEL THEME
+        // =========================================================
+
+        private void ApplyLabelTheme(
+            Label label,
+            Color foreground)
+        {
+            if (label == null)
+                return;
+
+            label.ForeColor =
+                foreground;
+        }
+
+        // =========================================================
+        // CHECKBOX THEME
+        // =========================================================
+
+        private void ApplyCheckBoxTheme(
+            CheckBox checkBox,
+            Color foreground)
+        {
+            if (checkBox == null)
+                return;
+
+            checkBox.ForeColor =
+                foreground;
+
+            checkBox.BackColor =
+                Color.Transparent;
+        }
+
+        // =========================================================
+        // BUTTON THEME
+        // =========================================================
+
+        private void ApplyButtonTheme(
+            Button button,
+            Color background,
+            Color foreground)
+        {
+            if (button == null)
+                return;
+
+            button.BackColor =
+                background;
+
+            button.ForeColor =
+                foreground;
+
+            button.UseVisualStyleBackColor =
+                false;
+        }
+
+        // =========================================================
+        // TAB THEME
+        // =========================================================
+
+        private void ApplyTabTheme(
+            Button button,
+            Color background,
+            Color foreground,
+            Color hoverBackground)
+        {
+            if (button == null)
+                return;
+
+            button.BackColor =
+                background;
+
+            button.ForeColor =
+                foreground;
+
+            button.FlatStyle =
+                FlatStyle.Flat;
+
+            button.FlatAppearance.BorderSize =
+                0;
+
+            button.FlatAppearance.MouseOverBackColor =
+                hoverBackground;
+
+            button.UseVisualStyleBackColor =
+                false;
+        }
 
         // =========================================================
         // TIMES - SOUND FILE PICKERS
@@ -1320,20 +2026,29 @@
             object sender,
             EventArgs e)
         {
-            using (OpenFileDialog dialog = new OpenFileDialog())
+            using (OpenFileDialog dialog =
+                   new OpenFileDialog())
             {
-                dialog.Title = "Select Pomodoro Sound";
+                dialog.Title =
+                    "Select Pomodoro Sound";
+
                 dialog.Filter =
                     "Audio files (*.wav;*.mp3)|*.wav;*.mp3|" +
                     "WAV files (*.wav)|*.wav|" +
                     "MP3 files (*.mp3)|*.mp3|" +
                     "All files (*.*)|*.*";
-                dialog.CheckFileExists = true;
-                dialog.Multiselect = false;
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+                dialog.CheckFileExists =
+                    true;
+
+                dialog.Multiselect =
+                    false;
+
+                if (dialog.ShowDialog() ==
+                    DialogResult.OK)
                 {
-                    txtPomodoroSoundPath.Text = dialog.FileName;
+                    txtPomodoroSoundPath.Text =
+                        dialog.FileName;
                 }
             }
         }
@@ -1342,20 +2057,29 @@
             object sender,
             EventArgs e)
         {
-            using (OpenFileDialog dialog = new OpenFileDialog())
+            using (OpenFileDialog dialog =
+                   new OpenFileDialog())
             {
-                dialog.Title = "Select Alarm Sound";
+                dialog.Title =
+                    "Select Alarm Sound";
+
                 dialog.Filter =
                     "Audio files (*.wav;*.mp3)|*.wav;*.mp3|" +
                     "WAV files (*.wav)|*.wav|" +
                     "MP3 files (*.mp3)|*.mp3|" +
                     "All files (*.*)|*.*";
-                dialog.CheckFileExists = true;
-                dialog.Multiselect = false;
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+                dialog.CheckFileExists =
+                    true;
+
+                dialog.Multiselect =
+                    false;
+
+                if (dialog.ShowDialog() ==
+                    DialogResult.OK)
                 {
-                    txtAlarmSoundPath.Text = dialog.FileName;
+                    txtAlarmSoundPath.Text =
+                        dialog.FileName;
                 }
             }
         }
@@ -1389,13 +2113,14 @@
                     0);
 
             button.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
 
             button.BackColor =
-                Color.FromArgb(
-                    18,
-                    18,
-                    18);
+                DarkMode
+                    ? Color.FromArgb(18, 18, 18)
+                    : Color.FromArgb(240, 240, 240);
 
             button.FlatStyle =
                 FlatStyle.Flat;
@@ -1404,10 +2129,9 @@
                 0;
 
             button.FlatAppearance.MouseOverBackColor =
-                Color.FromArgb(
-                    28,
-                    28,
-                    30);
+                DarkMode
+                    ? Color.FromArgb(28, 28, 30)
+                    : Color.FromArgb(220, 220, 220);
 
             button.Size =
                 new Size(
@@ -1434,10 +2158,9 @@
             Panel card)
         {
             card.BackColor =
-                Color.FromArgb(
-                    28,
-                    28,
-                    30);
+                DarkMode
+                    ? Color.FromArgb(28, 28, 30)
+                    : Color.FromArgb(235, 235, 235);
 
             card.Padding =
                 new Padding(20);
@@ -1464,7 +2187,9 @@
                     9F);
 
             checkBox.ForeColor =
-                Color.Gainsboro;
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.Black;
 
             checkBox.BackColor =
                 Color.Transparent;
@@ -1493,6 +2218,7 @@
             panel.RowStyles.Clear();
 
             // Two equal columns
+
             panel.ColumnStyles.Add(
                 new ColumnStyle(
                     SizeType.Percent,
@@ -1504,6 +2230,7 @@
                     50F));
 
             // Three equal rows
+
             panel.RowStyles.Add(
                 new RowStyle(
                     SizeType.Absolute,
