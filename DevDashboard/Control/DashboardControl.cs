@@ -1,4 +1,5 @@
-﻿using Settings;
+﻿using DevDashboard.Help;
+using Settings;
 using Settings.Models;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,13 @@ namespace DevDashboard.Control
     {
         private List<ISystemMonitors> _systems = new List<ISystemMonitors>();
 
-        private readonly SettingsFile<DashboardSetting> _settingsFile;
-
         private DashboardSetting _dashboardSetting;
 
         public DashboardControl()
         {
             InitializeComponent();
 
-            _settingsFile = new SettingsFile<DashboardSetting>();
-            _dashboardSetting = _settingsFile.Load();
+            _dashboardSetting = SettingLibHelp.GetSettingsFile<DashboardSetting>().Load();
 
             systemInfoTimer.Interval = _dashboardSetting.UpdateInterval;
 

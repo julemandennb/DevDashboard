@@ -1,5 +1,7 @@
-﻿using Settings;
+﻿using DevDashboard.Help;
+using Settings;
 using Settings.Models;
+using Settings.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +15,7 @@ namespace DevDashboard.Control
     public partial class SettingsControl : UserControl
     {
 
-        private List<Setting> _settings = new List<Setting>();
+        private Setting IsOn = null;
 
         public SettingsControl()
         {
@@ -35,8 +37,8 @@ namespace DevDashboard.Control
         private void btnDashboard_Click(object sender, EventArgs e)
         {
 
-            DashboardSetting dashboardSetting = AddToList<DashboardSetting>(GetSettingsFile<DashboardSetting>().Load());
-
+            DashboardSetting dashboardSetting = SettingLibHelp.AddToList<DashboardSetting>(SettingLibHelp.GetSettingsFile<DashboardSetting>().Load());
+            IsOn = dashboardSetting;
             numRefreshInterval.Value = dashboardSetting.UpdateInterval;
             chkSystemCpu.Checked = dashboardSetting.CpuMonitor;
             chkSystemRam.Checked = dashboardSetting.RamMonitor;
@@ -51,7 +53,7 @@ namespace DevDashboard.Control
 
         private void btnTimes_Click(object sender, EventArgs e)
         {
-            AddToList<TimesSetting>(GetSettingsFile<TimesSetting>().Load());
+            IsOn = SettingLibHelp.AddToList<TimesSetting>(SettingLibHelp.GetSettingsFile<TimesSetting>().Load());
             ShowPage(timePage);
             SetSelectedTab(btnTimes);
         }
@@ -119,34 +121,23 @@ namespace DevDashboard.Control
         }
 
 
-        private SettingsFile<T> GetSettingsFile<T>()
-        where T : Setting, new()
+        private void SaveTimesSetting()
         {
-            return new SettingsFile<T>();
-        }
-
-        private T AddToList<T>(T setting) where T : Setting
-        {
-            Setting? existing = _settings.Find(x => x.GetType() == typeof(T));
-
-            if (existing != null)
+            if (IsOn is TimesSetting timesSetting)
             {
-                return (T)existing;
+                if (!string.IsNullOrEmpty(txtPomodoroSoundPath.Text))
+                {
+                    FilePathServices.SaveSoundsFilePath(txtPomodoroSoundPath.Text, "PomodoroSound.wav");
+                    timesSetting.PomodoroSoundName = "PomodoroSound.wav";
+                }
+                if (!string.IsNullOrEmpty(txtAlarmSoundPath.Text))
+                {
+                    FilePathServices.SaveSoundsFilePath(txtAlarmSoundPath.Text, "AlarmSound.wav");
+                    timesSetting.AlarmSoundName = "AlarmSound.wav";
+                }
+
+                SettingLibHelp.SaveSetting(timesSetting);
             }
-
-            _settings.Add(setting);
-            return setting;
-        }
-
-        private T? GetSetting<T>() where T : Setting
-        {
-            return _settings.OfType<T>().FirstOrDefault();
-        }
-
-        private void SaveSetting<T>(T setting)
-            where T : Setting, new()
-        {
-            GetSettingsFile<T>().Save(setting);
         }
     }
 }

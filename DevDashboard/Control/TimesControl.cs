@@ -1,4 +1,5 @@
-﻿using Settings;
+﻿using DevDashboard.Help;
+using Settings;
 using Settings.Models;
 using Settings.Services;
 using System;
@@ -14,11 +15,7 @@ namespace DevDashboard.Control
 {
     public partial class TimesControl : UserControl
     {
-        private readonly SettingsFile<TimesSetting> _settingsFile;
-
         private TimesSetting _timesSetting;
-
-
 
         private readonly IPomodoro _pomodoro;
         private readonly System.Windows.Forms.Timer _timerPomodoro;
@@ -36,9 +33,7 @@ namespace DevDashboard.Control
         {
             InitializeComponent();
 
-            _settingsFile = new SettingsFile<TimesSetting>();
-            _timesSetting = _settingsFile.Load();
-
+            _timesSetting = SettingLibHelp.GetSettingsFile<TimesSetting>().Load();
 
             #region Pomodoro
             _pomodoroSetting = new PomodoroSettings
