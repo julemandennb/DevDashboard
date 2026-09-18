@@ -14,6 +14,7 @@ namespace DevDashboard.Control
 {
     public partial class SettingsControl : UserControl
     {
+        public event Action<bool>? DarkModeChanged;
 
         private Setting isOn = null;
 
@@ -31,6 +32,10 @@ namespace DevDashboard.Control
 
         private void btnAppearance_Click(object sender, EventArgs e)
         {
+            AppearanceSetting appearanceSetting = SettingLibHelp.AddToList<AppearanceSetting>(SettingLibHelp.GetSettingsFile<AppearanceSetting>().Load());
+            isOn = appearanceSetting;
+            chkDarkMode.Checked = appearanceSetting.DarkModel;
+
             ShowPage(appearancePage);
             SetSelectedTab(btnAppearance);
         }
@@ -115,6 +120,9 @@ namespace DevDashboard.Control
                 case TimesSetting timesSetting:
                     SaveTimesSetting(timesSetting);
                     break;
+                case AppearanceSetting appearanceSetting:
+                    SaveAppearanceSetting(appearanceSetting);
+                    break;
                 default:
                     break;
             }
@@ -136,16 +144,20 @@ namespace DevDashboard.Control
                     TimesSetting restTimesSetting = new TimesSetting();
                     SettingLibHelp.SaveSetting(restTimesSetting);
                     break;
+                case AppearanceSetting appearanceSetting:
+                    AppearanceSetting restAppearanceSetting = new AppearanceSetting();
+                    SettingLibHelp.SaveSetting(restAppearanceSetting);
+                    break;
                 default:
                     break;
             }
         }
 
-        private void chkDarkMode_CheckedChanged(
-            object sender,
-            EventArgs e)
+        private void chkDarkMode_CheckedChanged(object sender,EventArgs e)
         {
-            // Apply global theme here
+            bool value = chkDarkMode.Checked;
+
+            DarkModeChanged?.Invoke(value);
         }
 
         private void saveDashboardSetting(DashboardSetting dashboardSetting)
@@ -178,6 +190,12 @@ namespace DevDashboard.Control
                 }
 
                 SettingLibHelp.SaveSetting(timesSetting);
+        }
+    
+        private void SaveAppearanceSetting(AppearanceSetting appearanceSetting)
+        {
+            appearanceSetting.DarkModel = chkDarkMode.Checked;
+            SettingLibHelp.SaveSetting(appearanceSetting);
         }
     }
 }

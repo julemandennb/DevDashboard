@@ -11,6 +11,9 @@ namespace DevDashboard
 {
     public partial class Form1 : Form
     {
+        private AppearanceSetting _appearanceSetting;
+
+
         private DashboardControl _DashboardControl;
         private TimesControl _TimesControl;
         private ClipboardControl _ClipboardControl;
@@ -21,17 +24,31 @@ namespace DevDashboard
 
         public Form1()
         {
+            _appearanceSetting = SettingLibHelp.GetSettingsFile<AppearanceSetting>().Load();
+            DarkMode = _appearanceSetting.DarkModel;
 
-            darkMode = true;
-            _DashboardControl = new DashboardControl(darkMode);
-            _TimesControl = new TimesControl(darkMode);
-            _ClipboardControl = new ClipboardControl(darkMode);
-            _LauncherControl = new LauncherControl(darkMode);
-            _GitHubControl = new GitHubControl(darkMode);
-            _SettingsControl = new SettingsControl(darkMode);
+            _DashboardControl = new DashboardControl(DarkMode);
+            _TimesControl = new TimesControl(DarkMode);
+            _ClipboardControl = new ClipboardControl(DarkMode);
+            _LauncherControl = new LauncherControl(DarkMode);
+            _GitHubControl = new GitHubControl(DarkMode);
+            _SettingsControl = new SettingsControl(DarkMode);
+            _SettingsControl.DarkModeChanged += SettingsControl_DarkModeChanged;
 
             InitializeComponent();
             ShowPage(_DashboardControl);
+        }
+
+        private void SettingsControl_DarkModeChanged(bool value)
+        {
+            DarkMode = value;
+
+            _DashboardControl.DarkMode = value;
+            _TimesControl.DarkMode = value;
+            /*_ClipboardControl.DarkMode = value;
+            _LauncherControl.DarkMode = value;
+            _GitHubControl.DarkMode = value;*/
+            _SettingsControl.DarkMode = value;
         }
 
         private void ShowPage(UserControl page) { 
