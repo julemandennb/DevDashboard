@@ -30,10 +30,14 @@ namespace DevDashboard.Control
             darkMode = darkModeOn;
             InitializeComponent();
 
+            OpdateSetting();
+        }
+
+        public void OpdateSetting()
+        {
+            systemInfoTimer.Enabled = false;
             _dashboardSetting = SettingLibHelp.GetSettingsFile<DashboardSetting>().Load();
-
             systemInfoTimer.Interval = _dashboardSetting.UpdateInterval;
-
             SystemMonitorsAdd();
         }
 
@@ -163,7 +167,7 @@ namespace DevDashboard.Control
                 }
                 catch (Exception ex)
                 {
-                    Debugger.Break();
+                   
                 }
             }
         }

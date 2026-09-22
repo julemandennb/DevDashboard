@@ -32,11 +32,20 @@ namespace DevDashboard
             _ClipboardControl = new ClipboardControl(DarkMode);
             _LauncherControl = new LauncherControl(DarkMode);
             _GitHubControl = new GitHubControl(DarkMode);
+
             _SettingsControl = new SettingsControl(DarkMode);
             _SettingsControl.DarkModeChanged += SettingsControl_DarkModeChanged;
+            _SettingsControl.OpdateSetting += OpdateSetting;
 
             InitializeComponent();
             ShowPage(_DashboardControl);
+        }
+
+        private void OpdateSetting()
+        {
+            _DashboardControl.OpdateSetting();
+            _TimesControl.OpdateSetting();
+            _ClipboardControl.OpdateSetting();
         }
 
         private void SettingsControl_DarkModeChanged(bool value)
@@ -45,8 +54,8 @@ namespace DevDashboard
 
             _DashboardControl.DarkMode = value;
             _TimesControl.DarkMode = value;
-            /*_ClipboardControl.DarkMode = value;
-            _LauncherControl.DarkMode = value;
+            _ClipboardControl.DarkMode = value;
+           /* _LauncherControl.DarkMode = value;
             _GitHubControl.DarkMode = value;*/
             _SettingsControl.DarkMode = value;
         }

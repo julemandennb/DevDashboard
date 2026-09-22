@@ -16,6 +16,8 @@ namespace DevDashboard.Control
     {
         public event Action<bool>? DarkModeChanged;
 
+        public event Action? OpdateSetting;
+
         private Setting isOn = null;
 
         public SettingsControl(bool darkModeOn)
@@ -66,6 +68,11 @@ namespace DevDashboard.Control
 
         private void btnClipboard_Click(object sender, EventArgs e)
         {
+            ClipboardSetting clipboardSetting = SettingLibHelp.AddToList<ClipboardSetting>(SettingLibHelp.GetSettingsFile<ClipboardSetting>().Load());
+            isOn = clipboardSetting;
+            chkClipboardEnabled.Checked = clipboardSetting.Ison;
+
+
             ShowPage(clipboardPage);
             SetSelectedTab(btnClipboard);
         }
@@ -123,9 +130,17 @@ namespace DevDashboard.Control
                 case AppearanceSetting appearanceSetting:
                     SaveAppearanceSetting(appearanceSetting);
                     break;
+                case ClipboardSetting clipboardSetting:
+                    SaveClipboardSetting(clipboardSetting);
+                    break;
                 default:
                     break;
             }
+
+
+            OpdateSetting?.Invoke();
+
+
 
         }
 
@@ -148,9 +163,15 @@ namespace DevDashboard.Control
                     AppearanceSetting restAppearanceSetting = new AppearanceSetting();
                     SettingLibHelp.SaveSetting(restAppearanceSetting);
                     break;
+                case ClipboardSetting clipboardSetting:
+                    ClipboardSetting restClipboardSetting = new ClipboardSetting();
+                    SettingLibHelp.SaveSetting(restClipboardSetting);
+                    break;
                 default:
                     break;
             }
+
+            OpdateSetting?.Invoke();
         }
 
         private void chkDarkMode_CheckedChanged(object sender,EventArgs e)
@@ -196,6 +217,12 @@ namespace DevDashboard.Control
         {
             appearanceSetting.DarkModel = chkDarkMode.Checked;
             SettingLibHelp.SaveSetting(appearanceSetting);
+        }
+
+        private void SaveClipboardSetting(ClipboardSetting clipboardSetting)
+        {
+            clipboardSetting.Ison = chkClipboardEnabled.Checked;
+            SettingLibHelp.SaveSetting(clipboardSetting);
         }
     }
 }

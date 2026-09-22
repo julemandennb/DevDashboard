@@ -89,6 +89,17 @@ namespace DevDashboard.Control
             UpdateUi();
         }
 
+        public void OpdateSetting()
+        {
+            _timesSetting = SettingLibHelp.GetSettingsFile<TimesSetting>().Load();
+
+            string pomodoroSound = FilePathServices.GetSoundsFilePath(_timesSetting.PomodoroSoundName);
+            _pomodoro.SetSoundsPath(pomodoroSound);
+
+            string alarmSound = FilePathServices.GetSoundsFilePath(_timesSetting.AlarmSoundName);
+            _alarm.SetSoundsPath(alarmSound);
+        }
+
         private void UpdateUi()
         {
             this.UpdateUiPomodoro();

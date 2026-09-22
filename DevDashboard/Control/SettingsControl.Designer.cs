@@ -122,8 +122,6 @@
         private Label lblTimeDescription;
         private Panel timeCard;
 
-        private TableLayoutPanel timeChkPanelHold;
-
         private Panel PomodoroSoundCard;
         private Label lblPomodoroSoundTitle;
         private Label lblPomodoroSoundDescription;
