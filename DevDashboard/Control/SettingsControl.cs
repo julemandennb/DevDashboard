@@ -71,6 +71,7 @@ namespace DevDashboard.Control
             ClipboardSetting clipboardSetting = SettingLibHelp.AddToList<ClipboardSetting>(SettingLibHelp.GetSettingsFile<ClipboardSetting>().Load());
             isOn = clipboardSetting;
             chkClipboardEnabled.Checked = clipboardSetting.Ison;
+            numClipboardHistory.Value = clipboardSetting.Max;
 
 
             ShowPage(clipboardPage);
@@ -222,6 +223,7 @@ namespace DevDashboard.Control
         private void SaveClipboardSetting(ClipboardSetting clipboardSetting)
         {
             clipboardSetting.Ison = chkClipboardEnabled.Checked;
+            clipboardSetting.Max = Convert.ToInt32(numClipboardHistory.Value);
             SettingLibHelp.SaveSetting(clipboardSetting);
         }
     }

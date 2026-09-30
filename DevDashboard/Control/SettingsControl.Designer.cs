@@ -1,4 +1,8 @@
-﻿namespace DevDashboard.Control
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace DevDashboard.Control
 {
     partial class SettingsControl
     {
@@ -149,6 +153,9 @@
 
         private CheckBox chkClipboardEnabled;
 
+        private Label lblClipboardHistory;
+        private NumericUpDown numClipboardHistory;
+
         // =========================================================
         // BUTTONS
         // =========================================================
@@ -193,7 +200,10 @@
 
             contentPanel = new Panel();
 
-            // General
+            // =====================================================
+            // GENERAL
+            // =====================================================
+
             generalPage = new Panel();
             lblGeneralTitle = new Label();
             lblGeneralDescription = new Label();
@@ -205,7 +215,10 @@
             chkStartWithWindows = new CheckBox();
             chkStartMinimized = new CheckBox();
 
-            // Appearance
+            // =====================================================
+            // APPEARANCE
+            // =====================================================
+
             appearancePage = new Panel();
             lblAppearanceTitle = new Label();
             lblAppearanceDescription = new Label();
@@ -216,7 +229,10 @@
 
             chkDarkMode = new CheckBox();
 
-            // Dashboard
+            // =====================================================
+            // DASHBOARD
+            // =====================================================
+
             dashboardPage = new Panel();
             lblDashboardTitle = new Label();
             lblDashboardDescription = new Label();
@@ -238,7 +254,10 @@
             chkSystemDiskUsage = new CheckBox();
             chkSystemNetwork = new CheckBox();
 
-            // Times
+            // =====================================================
+            // TIMES
+            // =====================================================
+
             timePage = new Panel();
 
             lblTimeTitle = new Label();
@@ -258,7 +277,10 @@
             txtAlarmSoundPath = new TextBox();
             btnBrowseAlarmSound = new Button();
 
-            // Clipboard
+            // =====================================================
+            // CLIPBOARD
+            // =====================================================
+
             clipboardPage = new Panel();
             lblClipboardTitle = new Label();
             lblClipboardDescription = new Label();
@@ -270,7 +292,13 @@
 
             chkClipboardEnabled = new CheckBox();
 
-            // Buttons
+            lblClipboardHistory = new Label();
+            numClipboardHistory = new NumericUpDown();
+
+            // =====================================================
+            // BUTTONS
+            // =====================================================
+
             btnApply = new Button();
             btnReset = new Button();
 
@@ -363,7 +391,11 @@
                     : LightColor;
 
             contentPanel.Padding =
-                new Padding(0, 20, 0, 0);
+                new Padding(
+                    0,
+                    20,
+                    0,
+                    0);
 
             // =====================================================
             // GENERAL PAGE
@@ -377,7 +409,6 @@
                     ? DarkColor
                     : LightColor;
 
-            // Title
             lblGeneralTitle.AutoSize =
                 true;
 
@@ -398,7 +429,6 @@
             lblGeneralTitle.Location =
                 new Point(0, 0);
 
-            // Description
             lblGeneralDescription.AutoSize =
                 true;
 
@@ -413,7 +443,10 @@
             lblGeneralDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblGeneralDescription.Location =
                 new Point(0, 38);
@@ -431,7 +464,6 @@
             startupCard.Size =
                 new Size(600, 150);
 
-            // Startup title
             lblStartupTitle.AutoSize =
                 true;
 
@@ -452,7 +484,6 @@
             lblStartupTitle.Location =
                 new Point(20, 15);
 
-            // Startup description
             lblStartupDescription.AutoSize =
                 true;
 
@@ -467,12 +498,14 @@
             lblStartupDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblStartupDescription.Location =
                 new Point(20, 42);
 
-            // Start Windows
             ConfigureCheckBox(
                 chkStartWithWindows);
 
@@ -482,7 +515,6 @@
             chkStartWithWindows.Location =
                 new Point(20, 75);
 
-            // Start minimized
             ConfigureCheckBox(
                 chkStartMinimized);
 
@@ -525,7 +557,6 @@
                     ? DarkColor
                     : LightColor;
 
-            // Title
             lblAppearanceTitle.AutoSize =
                 true;
 
@@ -546,7 +577,6 @@
             lblAppearanceTitle.Location =
                 new Point(0, 0);
 
-            // Description
             lblAppearanceDescription.AutoSize =
                 true;
 
@@ -561,7 +591,10 @@
             lblAppearanceDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblAppearanceDescription.Location =
                 new Point(0, 38);
@@ -613,7 +646,10 @@
             lblThemeDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblThemeDescription.Location =
                 new Point(20, 42);
@@ -660,7 +696,6 @@
                     ? DarkColor
                     : LightColor;
 
-            // Title
             lblDashboardTitle.AutoSize =
                 true;
 
@@ -681,7 +716,6 @@
             lblDashboardTitle.Location =
                 new Point(0, 0);
 
-            // Description
             lblDashboardDescription.AutoSize =
                 true;
 
@@ -696,14 +730,13 @@
             lblDashboardDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblDashboardDescription.Location =
                 new Point(0, 38);
-
-            // =====================================================
-            // DASHBOARD CARD
-            // =====================================================
 
             ConfigureSettingsCard(
                 dashboardCard);
@@ -713,10 +746,6 @@
 
             dashboardCard.Size =
                 new Size(600, 270);
-
-            // -----------------------------------------------------
-            // TITLE
-            // -----------------------------------------------------
 
             lblRefreshTitle.AutoSize =
                 true;
@@ -738,10 +767,6 @@
             lblRefreshTitle.Location =
                 new Point(20, 15);
 
-            // -----------------------------------------------------
-            // DESCRIPTION
-            // -----------------------------------------------------
-
             lblRefreshDescription.AutoSize =
                 true;
 
@@ -756,14 +781,13 @@
             lblRefreshDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblRefreshDescription.Location =
                 new Point(20, 42);
-
-            // -----------------------------------------------------
-            // REFRESH INTERVAL
-            // -----------------------------------------------------
 
             numRefreshInterval.Minimum =
                 500;
@@ -785,17 +809,16 @@
 
             numRefreshInterval.BackColor =
                 DarkMode
-                    ? Color.FromArgb(35, 35, 38)
+                    ? Color.FromArgb(
+                        35,
+                        35,
+                        38)
                     : Color.White;
 
             numRefreshInterval.ForeColor =
                 DarkMode
                     ? Color.White
                     : Color.Black;
-
-            // -----------------------------------------------------
-            // MILLISECONDS LABEL
-            // -----------------------------------------------------
 
             lblRefreshMs.AutoSize =
                 true;
@@ -811,14 +834,13 @@
             lblRefreshMs.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblRefreshMs.Location =
                 new Point(150, 77);
-
-            // =====================================================
-            // SYSTEM CHECKBOX PANEL
-            // =====================================================
 
             ConfigureSystemCardsPanel(
                 systemChkPanelHold);
@@ -832,42 +854,35 @@
             systemChkPanelHold.Dock =
                 DockStyle.None;
 
-            // CPU
             ConfigureCheckBox(
                 chkSystemCpu);
 
             chkSystemCpu.Text =
                 "Show system CPU";
 
-            // RAM
             ConfigureCheckBox(
                 chkSystemRam);
 
             chkSystemRam.Text =
                 "Show system RAM";
 
-            // DISK
             ConfigureCheckBox(
                 chkSystemDiskUsage);
 
             chkSystemDiskUsage.Text =
                 "Show disk usage";
 
-            // NETWORK
             ConfigureCheckBox(
                 chkSystemNetwork);
 
             chkSystemNetwork.Text =
                 "Show network";
 
-            // NOTIFICATIONS
             ConfigureCheckBox(
                 chkSystemNotifications);
 
             chkSystemNotifications.Text =
                 "Show notifications";
-
-            // ADD CHECKBOXES
 
             systemChkPanelHold.Controls.Add(
                 chkSystemCpu,
@@ -893,8 +908,6 @@
                 chkSystemNotifications,
                 0,
                 2);
-
-            // ADD DASHBOARD CONTROLS
 
             dashboardCard.Controls.Add(
                 systemChkPanelHold);
@@ -932,8 +945,6 @@
                     ? DarkColor
                     : LightColor;
 
-            // Title
-
             lblTimeTitle.AutoSize =
                 true;
 
@@ -954,8 +965,6 @@
             lblTimeTitle.Location =
                 new Point(0, 0);
 
-            // Description
-
             lblTimeDescription.AutoSize =
                 true;
 
@@ -970,7 +979,10 @@
             lblTimeDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblTimeDescription.Location =
                 new Point(0, 38);
@@ -1022,7 +1034,10 @@
             lblPomodoroSoundDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblPomodoroSoundDescription.Location =
                 new Point(20, 42);
@@ -1035,7 +1050,10 @@
 
             txtPomodoroSoundPath.BackColor =
                 DarkMode
-                    ? Color.FromArgb(35, 35, 38)
+                    ? Color.FromArgb(
+                        35,
+                        35,
+                        38)
                     : Color.White;
 
             txtPomodoroSoundPath.ForeColor =
@@ -1064,8 +1082,14 @@
 
             btnBrowsePomodoroSound.BackColor =
                 DarkMode
-                    ? Color.FromArgb(45, 45, 48)
-                    : Color.FromArgb(220, 220, 220);
+                    ? Color.FromArgb(
+                        45,
+                        45,
+                        48)
+                    : Color.FromArgb(
+                        220,
+                        220,
+                        220);
 
             btnBrowsePomodoroSound.FlatStyle =
                 FlatStyle.Flat;
@@ -1147,7 +1171,10 @@
             lblAlarmSoundDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblAlarmSoundDescription.Location =
                 new Point(20, 42);
@@ -1160,7 +1187,10 @@
 
             txtAlarmSoundPath.BackColor =
                 DarkMode
-                    ? Color.FromArgb(35, 35, 38)
+                    ? Color.FromArgb(
+                        35,
+                        35,
+                        38)
                     : Color.White;
 
             txtAlarmSoundPath.ForeColor =
@@ -1189,8 +1219,14 @@
 
             btnBrowseAlarmSound.BackColor =
                 DarkMode
-                    ? Color.FromArgb(45, 45, 48)
-                    : Color.FromArgb(220, 220, 220);
+                    ? Color.FromArgb(
+                        45,
+                        45,
+                        48)
+                    : Color.FromArgb(
+                        220,
+                        220,
+                        220);
 
             btnBrowseAlarmSound.FlatStyle =
                 FlatStyle.Flat;
@@ -1273,7 +1309,7 @@
                 true;
 
             lblClipboardDescription.Text =
-                "Configure clipboard monitoring.";
+                "Configure clipboard monitoring and history.";
 
             lblClipboardDescription.Font =
                 new Font(
@@ -1283,7 +1319,10 @@
             lblClipboardDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblClipboardDescription.Location =
                 new Point(0, 38);
@@ -1299,7 +1338,11 @@
                 new Point(0, 85);
 
             clipboardCard.Size =
-                new Size(600, 125);
+                new Size(600, 175);
+
+            // =====================================================
+            // CLIPBOARD MONITORING
+            // =====================================================
 
             lblClipboardMonitoring.AutoSize =
                 true;
@@ -1335,7 +1378,10 @@
             lblClipboardMonitoringDescription.ForeColor =
                 DarkMode
                     ? Color.Gainsboro
-                    : Color.FromArgb(70, 70, 70);
+                    : Color.FromArgb(
+                        70,
+                        70,
+                        70);
 
             lblClipboardMonitoringDescription.Location =
                 new Point(20, 42);
@@ -1348,6 +1394,70 @@
 
             chkClipboardEnabled.Location =
                 new Point(20, 75);
+
+            // =====================================================
+            // MAXIMUM CLIPBOARD HISTORY
+            // =====================================================
+
+            lblClipboardHistory.AutoSize =
+                true;
+
+            lblClipboardHistory.Text =
+                "Maximum History";
+
+            lblClipboardHistory.Font =
+               new Font(
+                    "Segoe UI",
+                    9F);
+
+            lblClipboardHistory.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            lblClipboardHistory.Location =
+                new Point(20, 115);
+
+            numClipboardHistory.Minimum =
+                1;
+
+            numClipboardHistory.Maximum =
+                10000;
+
+            numClipboardHistory.Increment =
+                1;
+
+            numClipboardHistory.Value =
+                15;
+
+            numClipboardHistory.Size =
+                new Size(100, 30);
+
+            numClipboardHistory.Location =
+                new Point(170, 111);
+
+            numClipboardHistory.BackColor =
+                DarkMode
+                    ? Color.FromArgb(
+                        35,
+                        35,
+                        38)
+                    : Color.White;
+
+            numClipboardHistory.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            // =====================================================
+            // ADD CLIPBOARD CONTROLS
+            // =====================================================
+
+            clipboardCard.Controls.Add(
+                numClipboardHistory);
+
+            clipboardCard.Controls.Add(
+                lblClipboardHistory);
 
             clipboardCard.Controls.Add(
                 chkClipboardEnabled);
@@ -1431,9 +1541,6 @@
 
             btnApply.UseVisualStyleBackColor =
                 false;
-
-            btnApply.Click +=
-                btnApply_Click;
 
             // =====================================================
             // RESET BUTTON
@@ -1585,10 +1692,6 @@
                 ? DarkColor
                 : LightColor;
 
-            Color panelBackground = DarkMode
-                ? Color.FromArgb(28, 28, 30)
-                : Color.FromArgb(225, 225, 225);
-
             Color cardBackground = DarkMode
                 ? Color.FromArgb(28, 28, 30)
                 : Color.FromArgb(235, 235, 235);
@@ -1603,10 +1706,16 @@
 
             Color secondaryForeground = DarkMode
                 ? Color.Gainsboro
-                : Color.FromArgb(70, 70, 70);
+                : Color.FromArgb(
+                    70,
+                    70,
+                    70);
 
             Color inputBackground = DarkMode
-                ? Color.FromArgb(35, 35, 38)
+                ? Color.FromArgb(
+                    35,
+                    35,
+                    38)
                 : Color.White;
 
             Color inputForeground = DarkMode
@@ -1614,20 +1723,38 @@
                 : Color.Black;
 
             Color buttonBackground = DarkMode
-                ? Color.FromArgb(45, 45, 48)
-                : Color.FromArgb(220, 220, 220);
+                ? Color.FromArgb(
+                    45,
+                    45,
+                    48)
+                : Color.FromArgb(
+                    220,
+                    220,
+                    220);
 
             Color buttonForeground = DarkMode
                 ? Color.White
                 : Color.Black;
 
             Color tabBackground = DarkMode
-                ? Color.FromArgb(18, 18, 18)
-                : Color.FromArgb(240, 240, 240);
+                ? Color.FromArgb(
+                    18,
+                    18,
+                    18)
+                : Color.FromArgb(
+                    240,
+                    240,
+                    240);
 
             Color tabHoverBackground = DarkMode
-                ? Color.FromArgb(28, 28, 30)
-                : Color.FromArgb(220, 220, 220);
+                ? Color.FromArgb(
+                    28,
+                    28,
+                    30)
+                : Color.FromArgb(
+                    220,
+                    220,
+                    220);
 
             // =====================================================
             // MAIN
@@ -1718,7 +1845,8 @@
                 secondaryForeground);
 
             if (startupCard != null)
-                startupCard.BackColor = cardBackground;
+                startupCard.BackColor =
+                    cardBackground;
 
             ApplyCheckBoxTheme(
                 chkStartWithWindows,
@@ -1749,7 +1877,8 @@
                 secondaryForeground);
 
             if (themeCard != null)
-                themeCard.BackColor = cardBackground;
+                themeCard.BackColor =
+                    cardBackground;
 
             ApplyCheckBoxTheme(
                 chkDarkMode,
@@ -1780,7 +1909,8 @@
                 secondaryForeground);
 
             if (dashboardCard != null)
-                dashboardCard.BackColor = cardBackground;
+                dashboardCard.BackColor =
+                    cardBackground;
 
             if (numRefreshInterval != null)
             {
@@ -1899,6 +2029,10 @@
                 lblClipboardMonitoringDescription,
                 secondaryForeground);
 
+            ApplyLabelTheme(
+                lblClipboardHistory,
+                titleForeground);
+
             if (clipboardCard != null)
                 clipboardCard.BackColor =
                     cardBackground;
@@ -1906,6 +2040,15 @@
             ApplyCheckBoxTheme(
                 chkClipboardEnabled,
                 foreground);
+
+            if (numClipboardHistory != null)
+            {
+                numClipboardHistory.BackColor =
+                    inputBackground;
+
+                numClipboardHistory.ForeColor =
+                    inputForeground;
+            }
 
             // =====================================================
             // BUTTONS
@@ -1920,10 +2063,6 @@
                 btnReset,
                 cardBackground,
                 foreground);
-
-            // =====================================================
-            // REDRAW
-            // =====================================================
 
             Invalidate();
             Update();
@@ -2017,7 +2156,7 @@
         }
 
         // =========================================================
-        // TIMES - SOUND FILE PICKERS
+        // SOUND FILE PICKERS
         // =========================================================
 
         private void btnBrowsePomodoroSound_Click(
@@ -2117,8 +2256,14 @@
 
             button.BackColor =
                 DarkMode
-                    ? Color.FromArgb(18, 18, 18)
-                    : Color.FromArgb(240, 240, 240);
+                    ? Color.FromArgb(
+                        18,
+                        18,
+                        18)
+                    : Color.FromArgb(
+                        240,
+                        240,
+                        240);
 
             button.FlatStyle =
                 FlatStyle.Flat;
@@ -2128,8 +2273,14 @@
 
             button.FlatAppearance.MouseOverBackColor =
                 DarkMode
-                    ? Color.FromArgb(28, 28, 30)
-                    : Color.FromArgb(220, 220, 220);
+                    ? Color.FromArgb(
+                        28,
+                        28,
+                        30)
+                    : Color.FromArgb(
+                        220,
+                        220,
+                        220);
 
             button.Size =
                 new Size(
@@ -2157,8 +2308,14 @@
         {
             card.BackColor =
                 DarkMode
-                    ? Color.FromArgb(28, 28, 30)
-                    : Color.FromArgb(235, 235, 235);
+                    ? Color.FromArgb(
+                        28,
+                        28,
+                        30)
+                    : Color.FromArgb(
+                        235,
+                        235,
+                        235);
 
             card.Padding =
                 new Padding(20);
@@ -2215,8 +2372,6 @@
             panel.ColumnStyles.Clear();
             panel.RowStyles.Clear();
 
-            // Two equal columns
-
             panel.ColumnStyles.Add(
                 new ColumnStyle(
                     SizeType.Percent,
@@ -2226,8 +2381,6 @@
                 new ColumnStyle(
                     SizeType.Percent,
                     50F));
-
-            // Three equal rows
 
             panel.RowStyles.Add(
                 new RowStyle(
