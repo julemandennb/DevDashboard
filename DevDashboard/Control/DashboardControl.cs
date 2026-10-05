@@ -25,11 +25,14 @@ namespace DevDashboard.Control
 
         private DashboardSetting _dashboardSetting;
 
+        private SystemMonitorsLoader _systemmonitors;
+
         public DashboardControl(bool darkModeOn)
         {
             darkMode = darkModeOn;
             InitializeComponent();
-
+            
+            _systemmonitors = new SystemMonitorsLoader();
             OpdateSetting();
         }
 
@@ -37,12 +40,7 @@ namespace DevDashboard.Control
         {
             systemInfoTimer.Enabled = false;
             _dashboardSetting = SettingLibHelp.GetSettingsFile<DashboardSetting>().Load();
-            systemInfoTimer.Interval = _dashboardSetting.UpdateInterval;
-            SystemMonitorsAdd();
-        }
 
-        private void SystemMonitorsAdd()
-        {
             SystemMonitorOptions systemMonitorSetting = new SystemMonitorOptions()
             {
                 CpuMonitor = _dashboardSetting.CpuMonitor,
@@ -51,10 +49,17 @@ namespace DevDashboard.Control
                 InternetMonitor = _dashboardSetting.InternetMonitor,
                 EventLogMonitor = _dashboardSetting.EventLogMonitor
             };
-            SystemMonitors systemmonitors = new SystemMonitors(systemMonitorSetting);
+            _systemmonitors.SetSystemMonitorSetting(systemMonitorSetting);
+            systemInfoTimer.Interval = _dashboardSetting.UpdateInterval;
+
+            SystemMonitorsAdd();
+        }
+
+        private void SystemMonitorsAdd()
+        {
             _ = Task.Run(async () =>
             {
-                _systems = await systemmonitors.GetAll();
+                _systems = await _systemmonitors.GetAll();
 
                 this.SetMonitorInfo();
 

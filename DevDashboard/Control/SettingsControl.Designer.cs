@@ -1628,9 +1628,6 @@ namespace DevDashboard.Control
             btnReset.Click +=
                 btnReset_Click;
 
-            chkDarkMode.CheckedChanged +=
-                chkDarkMode_CheckedChanged;
-
             // =====================================================
             // INITIAL PAGE
             // =====================================================

@@ -175,13 +175,6 @@ namespace DevDashboard.Control
             OpdateSetting?.Invoke();
         }
 
-        private void chkDarkMode_CheckedChanged(object sender,EventArgs e)
-        {
-            bool value = chkDarkMode.Checked;
-
-            DarkModeChanged?.Invoke(value);
-        }
-
         private void saveDashboardSetting(DashboardSetting dashboardSetting)
         {
             dashboardSetting.UpdateInterval = Convert.ToInt32(numRefreshInterval.Value);
@@ -217,6 +210,7 @@ namespace DevDashboard.Control
         private void SaveAppearanceSetting(AppearanceSetting appearanceSetting)
         {
             appearanceSetting.DarkModel = chkDarkMode.Checked;
+            DarkModeChanged?.Invoke(appearanceSetting.DarkModel);
             SettingLibHelp.SaveSetting(appearanceSetting);
         }
 

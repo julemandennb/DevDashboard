@@ -13,19 +13,9 @@ namespace SystemMonitor
     /// Provides common functionality and defines the standard 
     /// operations that each monitor must implement. 
     /// </summary>
-    public class SystemMonitors: ISystemMonitors
+    public abstract class SystemMonitors: ISystemMonitors
     {
-        /// <summary>
-        /// The settings for the system monitor, which can be used to configure
-        /// </summary>
-        private SystemMonitorOptions _systemMonitorSetting;
-
-        public SystemMonitors(
-            SystemMonitorOptions systemMonitorSetting = null
-            ) {
-            _systemMonitorSetting = systemMonitorSetting ?? new SystemMonitorOptions();
-        }
-
+      
         /// <summary> 
         /// Gets a human-readable summary of the current system information. 
         /// </summary> 
@@ -36,11 +26,7 @@ namespace SystemMonitor
         /// <exception cref="NotSupportedException"> 
         /// Thrown when the method is not implemented by a derived system monitor. 
         /// </exception>
-        public virtual string Get()
-        {
-            throw new NotSupportedException(
-                   $"{GetType().Name} does not implement Get().");
-        }
+        public abstract string Get();
 
         /// <summary> 
         /// Gets the current monitored value as a list of decimal values. 
@@ -54,11 +40,7 @@ namespace SystemMonitor
         /// <exception cref="NotSupportedException"> 
         /// Thrown when the method is not implemented by a derived system monitor. 
         /// </exception>
-        public virtual List<decimal> GetVal()
-        {
-            throw new NotSupportedException(
-                 $"{GetType().Name} does not implement GetVal().");
-        }
+        public abstract List<decimal> GetVal();
 
         /// <summary> 
         /// Gets detailed system information collected by the specific system monitor. 
@@ -70,49 +52,8 @@ namespace SystemMonitor
         /// <exception cref="NotSupportedException"> 
         /// Thrown when the method is not implemented by a derived system monitor. 
         /// </exception>
-        public virtual List<DtoSystemInfo> SystemInfos()
-        {
-            throw new NotSupportedException(
-                 $"{GetType().Name} does not implement SystemInfos().");
-        }
+        public abstract List<DtoSystemInfo> SystemInfos();
 
-        /// <summary> 
-        /// Creates and returns all available system monitors. 
-        /// </summary> 
-        /// <returns> 
-        /// A task containing a list of system monitors, including CPU, RAM, 
-        /// disk drive, and internet monitors. 
-        /// </returns>
-        public Task<List<ISystemMonitors>> GetAll()
-        {
-            var monitors = new List<ISystemMonitors>();
-
-            if (_systemMonitorSetting.CpuMonitor)
-            {
-                monitors.Add(new CpuMonitor());
-            }
-
-            if (_systemMonitorSetting.RamMonitor)
-            {
-                monitors.Add(new RamMonitor());
-            }
-
-            if (_systemMonitorSetting.DiskMonitor)
-            {
-                monitors.Add(new DiskDriveMonitor());
-            }
-
-            if (_systemMonitorSetting.InternetMonitor)
-            {
-                monitors.Add(new InternetMonitor());
-            }
-
-            if (_systemMonitorSetting.EventLogMonitor)
-            {
-                monitors.Add(new EventLogMonitor());
-            }
-
-            return Task.FromResult(monitors);
-        }
+        
     }
 }
