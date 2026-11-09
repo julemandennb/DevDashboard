@@ -46,6 +46,7 @@ namespace DevDashboard
             _DashboardControl.OpdateSetting();
             _TimesControl.OpdateSetting();
             _ClipboardControl.OpdateSetting();
+            _LauncherControl.OpdateSetting();
         }
 
         private void SettingsControl_DarkModeChanged(bool value)

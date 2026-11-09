@@ -78,6 +78,16 @@ namespace DevDashboard.Control
             SetSelectedTab(btnClipboard);
         }
 
+        private void btnLauncher_Click(object sender, EventArgs e)
+        {
+            HotkeySetting hotkeySetting = SettingLibHelp.AddToList<HotkeySetting>(SettingLibHelp.GetSettingsFile<HotkeySetting>().Load());
+            isOn = hotkeySetting;
+            
+
+            ShowPage(launcherPage);
+            SetSelectedTab(btnLauncher);
+        }
+
         private void ShowPage(Panel page)
         {
             generalPage.Visible = false;
@@ -85,6 +95,7 @@ namespace DevDashboard.Control
             dashboardPage.Visible = false;
             timePage.Visible = false;
             clipboardPage.Visible = false;
+            launcherPage.Visible = false;
 
             page.Visible = true;
             page.BringToFront();
@@ -98,7 +109,8 @@ namespace DevDashboard.Control
                 btnAppearance,
                 btnDashboard,
                 btnTimes,
-                btnClipboard
+                btnClipboard,
+                btnLauncher
             };
 
             foreach (Button button in buttons)

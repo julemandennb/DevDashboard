@@ -57,6 +57,7 @@ namespace DevDashboard.Control
         private Button btnDashboard;
         private Button btnTimes;
         private Button btnClipboard;
+        private Button btnLauncher;
 
         // =========================================================
         // CONTENT
@@ -157,6 +158,22 @@ namespace DevDashboard.Control
         private NumericUpDown numClipboardHistory;
 
         // =========================================================
+        // LAUNCHER
+        // =========================================================
+
+        private Panel launcherPage;
+
+        private Label lblLauncherTitle;
+        private Label lblLauncherDescription;
+
+        private Panel launcherCard;
+
+        private ListView lstHotkeys;
+
+        private Button btnAddHotkey;
+        private Button btnEditHotkey;
+        private Button btnDeleteHotkey;
+        // =========================================================
         // BUTTONS
         // =========================================================
 
@@ -197,6 +214,7 @@ namespace DevDashboard.Control
             btnDashboard = new Button();
             btnTimes = new Button();
             btnClipboard = new Button();
+            btnLauncher = new Button();
 
             contentPanel = new Panel();
 
@@ -295,11 +313,28 @@ namespace DevDashboard.Control
             lblClipboardHistory = new Label();
             numClipboardHistory = new NumericUpDown();
 
-            // =====================================================
-            // BUTTONS
-            // =====================================================
+            // =========================================================
+            // LAUNCHER
+            // =========================================================
+           
+            launcherPage = new Panel();
 
-            btnApply = new Button();
+            lblLauncherTitle = new Label();
+            lblLauncherDescription = new Label();
+
+            launcherCard = new Panel();
+
+            lstHotkeys = new ListView();
+
+            btnAddHotkey = new Button();
+            btnEditHotkey = new Button();
+            btnDeleteHotkey = new Button();
+
+        // =====================================================
+        // BUTTONS
+        // =====================================================
+
+        btnApply = new Button();
             btnReset = new Button();
 
             SuspendLayout();
@@ -362,6 +397,15 @@ namespace DevDashboard.Control
                 btnClipboard,
                 "Clipboard",
                 4);
+
+            ConfigureTabButton(
+               btnLauncher,
+               "Launcher",
+               5);
+
+
+            tabPanel.Controls.Add(
+               btnLauncher);
 
             tabPanel.Controls.Add(
                 btnClipboard);
@@ -1622,6 +1666,9 @@ namespace DevDashboard.Control
             btnClipboard.Click +=
                 btnClipboard_Click;
 
+            btnLauncher.Click +=
+               btnLauncher_Click;
+
             btnApply.Click +=
                 btnApply_Click;
 
@@ -1820,6 +1867,14 @@ namespace DevDashboard.Control
                 tabBackground,
                 foreground,
                 tabHoverBackground);
+
+            ApplyTabTheme(
+               btnLauncher,
+               tabBackground,
+               foreground,
+               tabHoverBackground);
+
+            
 
             // =====================================================
             // GENERAL

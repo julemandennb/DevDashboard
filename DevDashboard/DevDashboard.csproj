@@ -12,6 +12,8 @@
     <ProjectReference Include="..\Audio\Audio.csproj" />
     <ProjectReference Include="..\Clipboard.Windows\Clipboard.Windows.csproj" />
     <ProjectReference Include="..\Clipboard\Clipboard.csproj" />
+    <ProjectReference Include="..\LauncherProgram.Windows\LauncherProgram.Windows.csproj" />
+    <ProjectReference Include="..\LauncherProgram\LauncherProgram.csproj" />
     <ProjectReference Include="..\Pomodoro\Timers.csproj" />
     <ProjectReference Include="..\Settings\Settings.csproj" />
     <ProjectReference Include="..\SystemMonitor\SystemMonitor.csproj" />
