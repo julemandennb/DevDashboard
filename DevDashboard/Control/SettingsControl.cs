@@ -1,5 +1,6 @@
 ﻿using DevDashboard.Help;
 using Settings;
+using Settings.Dto;
 using Settings.Models;
 using Settings.Services;
 using System;
@@ -19,6 +20,8 @@ namespace DevDashboard.Control
         public event Action? OpdateSetting;
 
         private Setting isOn = null;
+
+        private List<HotkeyProgramDto> _Hotkeys { get; set; } = new();
 
         public SettingsControl(bool darkModeOn)
         {
@@ -82,7 +85,10 @@ namespace DevDashboard.Control
         {
             HotkeySetting hotkeySetting = SettingLibHelp.AddToList<HotkeySetting>(SettingLibHelp.GetSettingsFile<HotkeySetting>().Load());
             isOn = hotkeySetting;
-            
+
+            _Hotkeys = hotkeySetting.Hotkeys;
+
+            RefreshHotkeyList();
 
             ShowPage(launcherPage);
             SetSelectedTab(btnLauncher);
@@ -146,15 +152,14 @@ namespace DevDashboard.Control
                 case ClipboardSetting clipboardSetting:
                     SaveClipboardSetting(clipboardSetting);
                     break;
+                case HotkeySetting hotkeySetting:
+                    SaveLauncher(hotkeySetting);
+                    break;
                 default:
                     break;
             }
 
-
             OpdateSetting?.Invoke();
-
-
-
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -179,6 +184,12 @@ namespace DevDashboard.Control
                 case ClipboardSetting clipboardSetting:
                     ClipboardSetting restClipboardSetting = new ClipboardSetting();
                     SettingLibHelp.SaveSetting(restClipboardSetting);
+                    break;
+                case HotkeySetting hotkeySetting:
+                    HotkeySetting resthotkeySetting = new HotkeySetting();
+                    SettingLibHelp.SaveSetting(resthotkeySetting);
+                    _Hotkeys.Clear();
+                    RefreshHotkeyList();
                     break;
                 default:
                     break;
@@ -232,5 +243,56 @@ namespace DevDashboard.Control
             clipboardSetting.Max = Convert.ToInt32(numClipboardHistory.Value);
             SettingLibHelp.SaveSetting(clipboardSetting);
         }
+
+        private void SaveLauncher(HotkeySetting hotkeySetting)
+        {
+            hotkeySetting.Hotkeys = _Hotkeys;
+            SettingLibHelp.SaveSetting(hotkeySetting);
+        }
+
+        //to hotkey
+
+        private void btnAddHotkey_Click(object sender, EventArgs e)
+        {
+            using (HotkeyEditorForm dialog = new HotkeyEditorForm(DarkMode))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    HotkeyProgramDto hotkey = dialog.hotkey;
+
+                    _Hotkeys.Add(hotkey);
+
+                    RefreshHotkeyList();
+                }
+            }
+        }
+
+        private void btnDeleteHotkey_Click(object sender, EventArgs e)
+        {
+           int index = lstHotkeys.SelectedIndices[0];
+           _Hotkeys.RemoveAt(index);
+           RefreshHotkeyList();
+        }
+
+        private void RefreshHotkeyList()
+        {
+            lstHotkeys.Items.Clear();
+
+            foreach (HotkeyProgramDto hotkey in _Hotkeys)
+            {
+                string shortcut = GetShortcutText.Get(
+                    hotkey.Key,
+                    hotkey.Modifiers);
+
+                ListViewItem item = new ListViewItem(hotkey.Commands);
+
+                item.SubItems.Add(hotkey.Launcher);
+                item.SubItems.Add(shortcut);
+
+                lstHotkeys.Items.Add(item);
+            }
+        }
+        
+        //hotkey end
     }
 }

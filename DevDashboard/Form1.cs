@@ -98,5 +98,22 @@ namespace DevDashboard
             ShowPage(_SettingsControl);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _DashboardControl?.Dispose();
+                _TimesControl?.Dispose();
+                _ClipboardControl?.Dispose();
+                _LauncherControl?.Dispose();
+                _GitHubControl?.Dispose();
+                _SettingsControl?.Dispose();
+
+                components?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 }

@@ -22,7 +22,9 @@ namespace DevDashboard.Control
 
         public LauncherControl(bool darkModeOn)
         {
+            darkMode = darkModeOn;
             InitializeComponent();
+            ApplyTheme();
 
             _hotkeyManager = new WindowsHotkeyManager();
             _launcherManager = new LauncherManager();
@@ -39,6 +41,11 @@ namespace DevDashboard.Control
 
             _hotkeySetting =
                 SettingLibHelp.GetSettingsFile<HotkeySetting>().Load();
+
+            if (_hotkeySetting?.Hotkeys == null)
+                return;
+
+            LoadHotkeys(_hotkeySetting.Hotkeys);
 
             foreach (HotkeyProgramDto item in _hotkeySetting.Hotkeys)
             {
@@ -70,11 +77,38 @@ namespace DevDashboard.Control
             _launcherManager.Execute(hotkey);
         }
 
+        private void LoadHotkeys(IEnumerable<HotkeyProgramDto> hotkeys)
+        {
+            hotkeyListView.Items.Clear();
+
+            foreach (HotkeyProgramDto hotkey in hotkeys)
+            {
+                string shortcut =
+                    GetShortcutText.Get(
+                        hotkey.Key,
+                        hotkey.Modifiers);
+
+                ListViewItem item =
+                    new ListViewItem(hotkey.Commands);
+
+                item.SubItems.Add(hotkey.Launcher);
+                item.SubItems.Add(shortcut);
+
+                hotkeyListView.Items.Add(item);
+            }
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _hotkeyManager?.Dispose();
+                if (_hotkeyManager != null)
+                {
+                    _hotkeyManager.HotkeyPressed -= OnHotkeyPressed;
+                    _hotkeyManager.Dispose();
+                }
+
                 components?.Dispose();
             }
 

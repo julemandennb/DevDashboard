@@ -171,7 +171,6 @@ namespace DevDashboard.Control
         private ListView lstHotkeys;
 
         private Button btnAddHotkey;
-        private Button btnEditHotkey;
         private Button btnDeleteHotkey;
         // =========================================================
         // BUTTONS
@@ -327,7 +326,6 @@ namespace DevDashboard.Control
             lstHotkeys = new ListView();
 
             btnAddHotkey = new Button();
-            btnEditHotkey = new Button();
             btnDeleteHotkey = new Button();
 
         // =====================================================
@@ -1521,9 +1519,186 @@ namespace DevDashboard.Control
             clipboardPage.Controls.Add(
                 lblClipboardTitle);
 
+
+            // =====================================================
+            // LAUNCHER PAGE
+            // =====================================================
+
+            launcherPage.Dock = DockStyle.Fill;
+
+            launcherPage.BackColor =
+                DarkMode
+                    ? DarkColor
+                    : LightColor;
+
+            // =====================================================
+            // TITLE
+            // =====================================================
+
+            lblLauncherTitle.AutoSize = true;
+
+            lblLauncherTitle.Text = "Launcher";
+
+            lblLauncherTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    18F,
+                    FontStyle.Bold);
+
+            lblLauncherTitle.ForeColor =
+                DarkMode
+                    ? Color.White
+                    : Color.Black;
+
+            lblLauncherTitle.Location =
+                new Point(0, 0);
+
+            // =====================================================
+            // DESCRIPTION
+            // =====================================================
+
+            lblLauncherDescription.AutoSize = true;
+
+            lblLauncherDescription.Text =
+                "Manage keyboard shortcuts and application launchers.";
+
+            lblLauncherDescription.Font =
+                new Font(
+                    "Segoe UI",
+                    10F);
+
+            lblLauncherDescription.ForeColor =
+                DarkMode
+                    ? Color.Gainsboro
+                    : Color.FromArgb(70, 70, 70);
+
+            lblLauncherDescription.Location =
+                new Point(0, 38);
+
+            // =====================================================
+            // LAUNCHER CARD
+            // =====================================================
+
+            ConfigureSettingsCard(launcherCard);
+
+            launcherCard.Location =
+                new Point(0, 85);
+
+            launcherCard.Size =
+                new Size(800, 300);
+
+            // =====================================================
+            // HOTKEY LIST
+            // =====================================================
+
+            lstHotkeys.Location =
+              new Point(20, 20);
+
+            lstHotkeys.Size =
+                new Size(560, 200);
+
+            lstHotkeys.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left;
+
+            lstHotkeys.View =
+                View.Details;
+
+            lstHotkeys.FullRowSelect =
+                true;
+
+            lstHotkeys.GridLines =
+                false;
+
+            lstHotkeys.MultiSelect =
+                false;
+
+            lstHotkeys.HideSelection =
+                false;
+
+            lstHotkeys.Columns.Clear();
+
+            lstHotkeys.Columns.Add("Commands", 200);
+            lstHotkeys.Columns.Add("Launcher", 160);
+            lstHotkeys.Columns.Add("Shortcut", 160);
+
+            // =====================================================
+            // ADD BUTTON
+            // =====================================================
+
+            btnAddHotkey.Text = "Add";
+
+            btnAddHotkey.Size =
+                new Size(100, 35);
+
+            btnAddHotkey.Location =
+                new Point(20, 240);
+
+            btnAddHotkey.Font =
+                new Font("Segoe UI", 9F);
+
+            btnAddHotkey.Cursor =
+                Cursors.Hand;
+
+            btnAddHotkey.FlatStyle =
+                FlatStyle.Flat;
+
+            btnAddHotkey.FlatAppearance.BorderSize = 0;
+
+            btnAddHotkey.UseVisualStyleBackColor = false;
+
+            btnAddHotkey.Click +=
+                btnAddHotkey_Click;
+
+            // =====================================================
+            // DELETE BUTTON
+            // =====================================================
+
+            btnDeleteHotkey.Text = "Delete";
+
+            btnDeleteHotkey.Size =
+                new Size(100, 35);
+
+            btnDeleteHotkey.Location =
+                new Point(250, 240);
+
+            btnDeleteHotkey.Font =
+                new Font("Segoe UI", 9F);
+
+            btnDeleteHotkey.Cursor =
+                Cursors.Hand;
+
+            btnDeleteHotkey.FlatStyle =
+                FlatStyle.Flat;
+
+            btnDeleteHotkey.FlatAppearance.BorderSize = 0;
+
+            btnDeleteHotkey.UseVisualStyleBackColor = false;
+
+            btnDeleteHotkey.Click += btnDeleteHotkey_Click;
+
+            // =====================================================
+            // ADD CONTROLS
+            // =====================================================
+
+            launcherCard.Controls.Add(lstHotkeys);
+
+            launcherCard.Controls.Add(btnAddHotkey);
+
+            launcherCard.Controls.Add(btnDeleteHotkey);
+
+            launcherPage.Controls.Add(launcherCard);
+
+            launcherPage.Controls.Add(lblLauncherDescription);
+
+            launcherPage.Controls.Add(lblLauncherTitle);
+
+
             // =====================================================
             // ADD PAGES
             // =====================================================
+
+            contentPanel.Controls.Add(launcherPage);
 
             contentPanel.Controls.Add(
                 clipboardPage);
@@ -1693,6 +1868,8 @@ namespace DevDashboard.Control
 
             clipboardPage.Visible =
                 false;
+
+            launcherPage.Visible = false;
 
             SetSelectedTab(
                 btnGeneral);
@@ -2101,6 +2278,39 @@ namespace DevDashboard.Control
                 numClipboardHistory.ForeColor =
                     inputForeground;
             }
+
+
+            // =====================================================
+            // LAUNCHER
+            // =====================================================
+
+            ApplyLabelTheme(
+                lblLauncherTitle,
+                titleForeground);
+
+            ApplyLabelTheme(
+                lblLauncherDescription,
+                secondaryForeground);
+
+            if (launcherCard != null)
+                launcherCard.BackColor = cardBackground;
+
+            if (lstHotkeys != null)
+            {
+                lstHotkeys.BackColor = inputBackground;
+                lstHotkeys.ForeColor = inputForeground;
+            }
+
+            ApplyButtonTheme(
+                btnAddHotkey,
+                buttonBackground,
+                buttonForeground);
+
+            ApplyButtonTheme(
+                btnDeleteHotkey,
+                buttonBackground,
+                buttonForeground);
+
 
             // =====================================================
             // BUTTONS
