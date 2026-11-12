@@ -124,21 +124,11 @@
 
             sidebarPanel.Controls.Add(btnLauncher);
 
-            // GitHub
-            ConfigureMenuButton(
-                btnGitHub,
-                "◉  GitHub",
-                275);
-
-            btnGitHub.Click += btnGitHub_Click;
-
-            sidebarPanel.Controls.Add(btnGitHub);
-
             // Settings
             ConfigureMenuButton(
                 btnSettings,
                 "⚙  Settings",
-                325);
+                275);
 
             btnSettings.Click += btnSettings_Click;
 

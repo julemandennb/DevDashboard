@@ -18,7 +18,6 @@ namespace DevDashboard
         private TimesControl _TimesControl;
         private ClipboardControl _ClipboardControl;
         private LauncherControl _LauncherControl;
-        private GitHubControl _GitHubControl;
         private SettingsControl _SettingsControl;
 
 
@@ -31,7 +30,6 @@ namespace DevDashboard
             _TimesControl = new TimesControl(DarkMode);
             _ClipboardControl = new ClipboardControl(DarkMode);
             _LauncherControl = new LauncherControl(DarkMode);
-            _GitHubControl = new GitHubControl(DarkMode);
 
             _SettingsControl = new SettingsControl(DarkMode);
             _SettingsControl.DarkModeChanged += SettingsControl_DarkModeChanged;
@@ -88,11 +86,6 @@ namespace DevDashboard
             ShowPage(_LauncherControl);
         }
 
-        private void btnGitHub_Click(object sender, EventArgs e) 
-        { 
-            ShowPage(_GitHubControl);
-        }
-
         private void btnSettings_Click(object sender, EventArgs e) 
         { 
             ShowPage(_SettingsControl);
@@ -106,7 +99,6 @@ namespace DevDashboard
                 _TimesControl?.Dispose();
                 _ClipboardControl?.Dispose();
                 _LauncherControl?.Dispose();
-                _GitHubControl?.Dispose();
                 _SettingsControl?.Dispose();
 
                 components?.Dispose();
