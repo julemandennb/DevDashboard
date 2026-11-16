@@ -7,18 +7,22 @@ namespace Settings.Services
 {
     internal static class PathServices
     {
+
+        public static string RootPath =>
+           Path.Combine(
+               Environment.GetFolderPath(
+                   Environment.SpecialFolder.ApplicationData),
+               "DevDashboard"
+           );
+
+
         public static DtoPathServices Root
         {
             get
             {
-                string path = Path.Combine(
-                    Environment.GetFolderPath(
-                        Environment.SpecialFolder.ApplicationData),
-                    "DevDashboard");
+                Directory.CreateDirectory(RootPath);
 
-                Directory.CreateDirectory(path);
-
-                return new DtoPathServices(path);
+                return new DtoPathServices(RootPath);
             }
         }
 

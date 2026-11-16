@@ -3,6 +3,7 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="Audio/Audio.csproj" Id="4e938bf1-f743-4b73-b7f4-9197e3320907" />
+  <Project Path="Cleanup/Cleanup.csproj" Id="ae67d776-3a87-4b60-bf95-dae7b0aab34d" />
   <Project Path="Clipboard.Windows/Clipboard.Windows.csproj" Id="bb86ef20-b911-4d95-90e2-db68f2043376" />
   <Project Path="Clipboard/Clipboard.csproj" Id="3d1a4c44-f069-40fd-af3a-d441c1460701" />
   <Project Path="DevDashboard/DevDashboard.csproj" />
@@ -10,5 +11,6 @@
   <Project Path="LauncherProgram/LauncherProgram.csproj" Id="95162559-fec4-4566-a587-f46a59a243f6" />
   <Project Path="Pomodoro/Timers.csproj" Id="ebe532fd-3ea4-4e04-a52d-3b6a3e2dcd34" />
   <Project Path="Settings/Settings.csproj" Id="711100a3-4bac-49cb-828a-1d2071fbe635" />
+  <Project Path="SetupDevDashboard/SetupDevDashboard.vdproj" Type="Installer" />
   <Project Path="SystemMonitor/SystemMonitor.csproj" />
 </Solution>
