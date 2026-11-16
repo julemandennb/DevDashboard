@@ -12,6 +12,7 @@ namespace DevDashboard
     public partial class Form1 : Form
     {
         private AppearanceSetting _appearanceSetting;
+        private GeneralSetting _generalSetting;
 
 
         private DashboardControl _DashboardControl;
@@ -26,6 +27,8 @@ namespace DevDashboard
             _appearanceSetting = SettingLibHelp.GetSettingsFile<AppearanceSetting>().Load();
             DarkMode = _appearanceSetting.DarkModel;
 
+            _generalSetting = SettingLibHelp.GetSettingsFile<GeneralSetting>().Load();
+
             _DashboardControl = new DashboardControl(DarkMode);
             _TimesControl = new TimesControl(DarkMode);
             _ClipboardControl = new ClipboardControl(DarkMode);
@@ -37,6 +40,8 @@ namespace DevDashboard
 
             InitializeComponent();
             ShowPage(_DashboardControl);
+
+            this.WindowState = _generalSetting.MinimizedOnStart ? FormWindowState.Minimized : FormWindowState.Normal;
         }
 
         private void OpdateSetting()
@@ -54,8 +59,7 @@ namespace DevDashboard
             _DashboardControl.DarkMode = value;
             _TimesControl.DarkMode = value;
             _ClipboardControl.DarkMode = value;
-           /* _LauncherControl.DarkMode = value;
-            _GitHubControl.DarkMode = value;*/
+            _LauncherControl.DarkMode = value;
             _SettingsControl.DarkMode = value;
         }
 

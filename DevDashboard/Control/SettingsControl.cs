@@ -27,10 +27,18 @@ namespace DevDashboard.Control
         {
             darkMode = darkModeOn;
             InitializeComponent();
+
+            btnGeneral_Click(null, null);
+
         }
 
         private void btnGeneral_Click(object sender, EventArgs e)
         {
+            GeneralSetting generalSetting = SettingLibHelp.AddToList<GeneralSetting>(SettingLibHelp.GetSettingsFile<GeneralSetting>().Load());
+            isOn = generalSetting;
+            chkStartWithWindows.Checked = generalSetting.StartWithPc;
+            chkStartMinimized.Checked = generalSetting.MinimizedOnStart;
+
             ShowPage(generalPage);
             SetSelectedTab(btnGeneral);
         }
@@ -139,6 +147,9 @@ namespace DevDashboard.Control
         {
             switch (isOn)
             {
+                case GeneralSetting generalSetting:
+                    SaveGeneralSetting(generalSetting);
+                    break;
                 case DashboardSetting dashboardSetting:
                     saveDashboardSetting(dashboardSetting);
                     break;
@@ -166,6 +177,11 @@ namespace DevDashboard.Control
         {
             switch (isOn)
             {
+                case GeneralSetting generalSetting:
+                    GeneralSetting restgeneralSetting = new GeneralSetting();
+                    SettingLibHelp.SaveSetting(restgeneralSetting);
+                    StartupManager.SetStartWithPC(generalSetting.StartWithPc);
+                    break;
                 case DashboardSetting dashboardSetting:
                     DashboardSetting restDashboardSetting = new DashboardSetting();
                     SettingLibHelp.SaveSetting(restDashboardSetting);
@@ -196,6 +212,16 @@ namespace DevDashboard.Control
             }
 
             OpdateSetting?.Invoke();
+        }
+
+        private void SaveGeneralSetting(GeneralSetting generalSetting)
+        {
+            generalSetting.StartWithPc = chkStartWithWindows.Checked;
+            generalSetting.MinimizedOnStart = chkStartMinimized.Checked;
+
+            SettingLibHelp.SaveSetting(generalSetting);
+
+            StartupManager.SetStartWithPC(generalSetting.StartWithPc);
         }
 
         private void saveDashboardSetting(DashboardSetting dashboardSetting)
